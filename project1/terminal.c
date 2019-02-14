@@ -5,16 +5,18 @@
 int main(void)
 {
 	bool exit = false;
-	char command[20];
 	printf("------------------------------------------------------------------\n");
 	printf("Enter a command. Type 'Help' to get a list of commands\n");
-	
 	while(exit == false)
 	{
-	        printf("Input: ");
-	        scanf("%20s", command);
-
-		if(!strcmp(command, "help") | !strcmp(command, "Help"))
+	        char command[16];
+		printf("Input: ");
+	        scanf("%15s", command); 	//TODO: protect against a user input that is too long.
+		if(sizeof(command) > 20)
+		{
+			printf("\nCommand not recognized, try again\n");
+		}
+		else if(!strcmp(command, "help") | !strcmp(command, "Help"))
 		{
 			help();
 		}
@@ -25,6 +27,8 @@ int main(void)
 			return 0;
 		}
 		else
-			printf("Command not recognized, try again\n");
+		{
+			printf("\nCommand not recognized, try again\n");
+		}
 	}
 }
