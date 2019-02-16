@@ -17,7 +17,7 @@ int invert()
 	printf("address0:%d\n", address[0]);
 	printf("address1:%d\n", address[1]);
 
-//	if(!isxdigit(&address))
+//	if( (((addr |= 0x20) >= '0') && (addr <= '9')) || ((addr >= 'a') && (addr <= 'f'))  )
     {
 //	    printf("\nYou need to enter in hex.\n\n");
 //	    printf("Enter a 32 bit hex address without \"0x\" where you want the data saved: \n");
