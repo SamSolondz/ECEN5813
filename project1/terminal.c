@@ -7,9 +7,10 @@ int main(void)
 {
 	bool exit = false;
 	printf("------------------------------------------------------------------\n");
-	printf("Enter a command. Type 'Help' to get a list of commands\n");
+	printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 
-	void * allocated;
+
+	char * allocated;	//pointer to allocated memory
 
 	while(exit == false)
 	{
@@ -27,7 +28,7 @@ int main(void)
 		else if(!strcmp(command, "allocate") | !strcmp(command, "Allocate"))
 		{
 			allocated = allocate();
-			printf("%p\n", allocated);
+			printf("Address of first block is %p\n", (void *) allocated);
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
@@ -37,7 +38,7 @@ int main(void)
 		}
 		else
 		{
-			printf("\nCommand not recognized, try again\n");
+			printf("\nFunction not yet implemented, try again later.\n");
 		}
 	}
 }

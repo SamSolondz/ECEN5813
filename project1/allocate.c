@@ -13,6 +13,6 @@ char * allocate()
 		printf("Memory could not be allocated.\n");
 		return NULL;
 	}
-	//printf("%d", ptr);
+	//printf("%c\n", *ptr);
 	return ptr;
 }
