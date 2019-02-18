@@ -22,7 +22,7 @@ help.o: help.c help.h
 allocate.o: allocate.c allocate.h
 	cc -c allocate.c
 
-free.0: free.c free.h
+free.o: free.c free.h
 	cc -c free.c
 
 displaymem.o: displaymem.c displaymem.h
