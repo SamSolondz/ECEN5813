@@ -1,30 +1,32 @@
 #include "write.h"
 
-int write()
-{   
+void write()
+{
 	// get specified value and specified address from user
-    unsigned int *addr = 0; 
-    unsigned int val = 0;
+    unsigned long *addr = 0;
+    unsigned long val = 0;
+    unsigned long read = 0;
 
-	printf("Enter a 32-bit hex address without \"0x\" where you want the data saved. (ex f4ac23df): \n");
-	scanf("%p", &addr);
-	
-//	if( ((*addr <= '0') || (*addr >= '9')) || ((*addr <= 'a') || (*addr >= 'f')) )
-    {
-//	    printf("\nYou need to enter in hex.\n\n");
-	}
-	
-	printf("Enter a 32-bit hex data without \"0x\" you want to save: \n");
-	scanf("%x", &val);
-	
-//	if( ((*addr <= '0') || (*addr >= '9')) || ((*addr <= 'a') || (*addr >= 'f')) )
-    {
-//	    printf("\nYou need to enter in hex.\n\n");
-	}
+  printf("Enter a hex address where you want the data saved. (ex 0xf4ac23df): \n");
+  //TODO: bounds checking
+  scanf("%li", &read); //pointer to pointer
+  addr = (unsigned long *) read;
 
-    *(int*)&addr = val;	
-	
-	printf("Data = 0x%X \n", val);
-	printf("Address = %p\n", &addr);
-	printf("Data at address = 0x%X \n", addr);
+
+
+	printf("Enter hex data (ex 0x15): \n");
+  //TODO: bounds checking
+	scanf("%li", &val);
+
+  *addr = val;
+    //*(int*)&addr = val;
+
+	printf("Data = %#08lX \n", val);
+	printf("Address = %p\n", addr);
+  if(addr == NULL)
+  {
+    printf("Memory not written\n");
+    return;
+  }
+	printf("Data at address = %#08lX \n", *addr);
 }

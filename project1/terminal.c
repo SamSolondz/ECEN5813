@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "help.h"
 #include "allocate.h"
+#include "write.h"
 int main(void)
 {
 	bool exit = false;
@@ -28,13 +29,17 @@ int main(void)
 		else if(!strcmp(command, "allocate") | !strcmp(command, "Allocate"))
 		{
 			allocated = allocate();
-			printf("Address of first block is %p\n", (void *) allocated);
+			printf("Address of first block is %p\n", (char *) allocated);
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
 			printf("Bye!\n");
 			exit = true;
 			return 0;
+		}
+		else if(!strcmp(command, "write") | !strcmp(command, "Write"))
+		{
+			write();
 		}
 		else
 		{

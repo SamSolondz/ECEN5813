@@ -8,7 +8,7 @@ CFLAGS = -Wall -Werror
 
 TARGET = terminal
 
-OBJECTS = terminal.o help.o allocate.o
+OBJECTS = terminal.o help.o allocate.o write.o
 
 #$(TARGET): $(OBJECTS)
 #	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
