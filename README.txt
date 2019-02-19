@@ -1,4 +1,3 @@
 README
 
-
-This is a README file for repository ECEN5813
+Run "make" in project1 folder
