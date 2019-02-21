@@ -4,6 +4,8 @@
 #include "help.h"
 #include "allocate.h"
 #include "write.h"
+
+
 int main(void)
 {
 	bool exit = false;
@@ -11,12 +13,12 @@ int main(void)
 	printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 
 
-	char * allocated;	//pointer to allocated memory
-
+	 void * addresses[10];	//pointer to allocated memory
+	 int i = 0;
 	while(exit == false)
 	{
 	  char command[16];
-		printf("Input: ");
+		printf("Command: ");
 	        scanf("%15s", command); 	//TODO: protect against a user input that is too long.
 		if(sizeof(command) > 20)
 		{
@@ -28,8 +30,15 @@ int main(void)
 		}
 		else if(!strcmp(command, "allocate") | !strcmp(command, "Allocate"))
 		{
-			allocated = allocate();
-			printf("Address of first block is %p\n", (char *) allocated);
+			void * allocated = allocate();
+			addresses[i] = allocated;
+
+			printf("Address of first block is %p\n", (void *) addresses[i]);
+			i++;
+		}
+		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
+		{
+			//free();
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{

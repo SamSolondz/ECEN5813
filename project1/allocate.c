@@ -7,7 +7,7 @@ char * allocate()
 	scanf("%s", byte_read); 	//TODO: protect against user input that is too long.
 	int byte_count = atol(byte_read);
 
-	char *ptr = (char *) malloc(byte_count * sizeof(char));
+	void * ptr = (void *) malloc(byte_count * sizeof(char));
 	if(ptr == NULL)
 	{
 		printf("Memory could not be allocated.\n");

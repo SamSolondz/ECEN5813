@@ -42,4 +42,4 @@ verify.o: verify.c verify.h
 
 
 clean:
-	$(RM) $(TARGET)
+	-rm *.o $(objects)
