@@ -1,5 +1,6 @@
 #include "write.h"
 
+
 void write()
 {
 	// get specified value and specified address from user
@@ -10,19 +11,28 @@ void write()
   printf("Enter a hex address where you want the data saved. (ex 0xf4ac23df) \nInput: ");
   //TODO: bounds checking
   scanf("%li", &read); //pointer to pointer
-  addr = (unsigned long *) read;
-
-	printf("Enter hex data (ex 0x15) \nInput: ");
-  //TODO: bounds checking
-	scanf("%li", &val);
-
-  *addr = val;
-	printf("Data = %li \n", val);
-	printf("Address = %p\n", addr);
-  if(addr == NULL)
+  if(read == 0)
   {
-    printf("Memory not written\n");
     return;
   }
-	printf("Data at address = %#08lX \n", *addr);
+
+  addr = (unsigned long *) read;
+  for(int j = 0; j < addr_index; j++){
+    if(addr == addresses[j])
+    {
+      printf("Enter hex data (ex 0x15) \nInput: ");
+      scanf("%li", &val); //TODO: bounds checking
+
+
+      *addr = val;
+    	printf("Data = %li \n", val);
+    	printf("Address = %p\n", addr);
+
+    	printf("Data at address = %#08lX \n", *addr);
+      return;
+    }
+  }
+  printf("Memory has not been allocated at that address!\n");
+  return;
+
 }

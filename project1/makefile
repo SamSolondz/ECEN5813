@@ -8,7 +8,7 @@ CFLAGS = -Wall -Werror
 
 TARGET = terminal
 
-OBJECTS = terminal.o help.o allocate.o write.o
+OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o
 
 #$(TARGET): $(OBJECTS)
 #	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
@@ -22,8 +22,8 @@ help.o: help.c help.h
 allocate.o: allocate.c allocate.h
 	cc -c allocate.c
 
-free.o: free.c free.h
-	cc -c free.c
+freemem.o: freemem.c freemem.h
+	cc -c freemem.c
 
 displaymem.o: displaymem.c displaymem.h
 	cc -c displaymem.c
@@ -42,4 +42,5 @@ verify.o: verify.c verify.h
 
 
 clean:
-	-rm *.o $(objects)
+	-rm -rf *.o $(OBJECTS)
+	-rm -rf $(TARGET)

@@ -4,19 +4,20 @@
 #include "help.h"
 #include "allocate.h"
 #include "write.h"
+#include "freemem.h"
+#include "displaymem.h"
 
+void * addresses[10];	//pointer to allocated memory
+int addr_index = 0;
 
 int main(void)
 {
 	bool exit = false;
-	printf("------------------------------------------------------------------\n");
-	printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 
-
-	 void * addresses[10];	//pointer to allocated memory
-	 int i = 0;
 	while(exit == false)
 	{
+		printf("\n------------------------------------------------------------------\n");
+		printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 	  char command[16];
 		printf("Command: ");
 	        scanf("%15s", command); 	//TODO: protect against a user input that is too long.
@@ -31,14 +32,18 @@ int main(void)
 		else if(!strcmp(command, "allocate") | !strcmp(command, "Allocate"))
 		{
 			void * allocated = allocate();
-			addresses[i] = allocated;
+			addresses[addr_index] = allocated;
 
-			printf("Address of first block is %p\n", (void *) addresses[i]);
-			i++;
+			printf("Address of allocated %p\n", (void *) addresses[addr_index]);
+			addr_index++;
+		}
+		else if(!strcmp(command, "display") | !strcmp(command, "Display"))
+		{
+			displaymem();
 		}
 		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
 		{
-			//free();
+			freemem();
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
