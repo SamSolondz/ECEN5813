@@ -7,13 +7,14 @@ char * allocate()
 	scanf("%s", byte_read); 	//TODO: protect against user input that is too long.
 	int byte_count = atol(byte_read);
 
-	void * ptr = (void *) malloc(byte_count * sizeof(uint8_t));
+	void * memPtr = (void *) malloc(byte_count * sizeof(uint8_t));
 	printf("size %lu", sizeof(uint8_t));
+	printf("Address of allocated memory: %X\n", memPtr);   //show user address of allocated memory
 	if(ptr == NULL)
 	{
 		printf("Memory could not be allocated.\n");
 		return NULL;
 	}
-	//printf("%c\n", *ptr);
-	return ptr;
+	//printf("%c\n", *memPtr);
+	return memPtr;
 }
