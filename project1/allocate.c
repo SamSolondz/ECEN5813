@@ -8,9 +8,8 @@ char * allocate()
 	int byte_count = atol(byte_read);
 
 	void * memPtr = (void *) malloc(byte_count * sizeof(uint8_t));
-	printf("size %lu", sizeof(uint8_t));
-	printf("Address of allocated memory: %X\n", memPtr);   //show user address of allocated memory
-	if(ptr == NULL)
+	printf("Address of allocated memory: %p\n", memPtr);   //show user address of allocated memory
+	if(memPtr == NULL)
 	{
 		printf("Memory could not be allocated.\n");
 		return NULL;
