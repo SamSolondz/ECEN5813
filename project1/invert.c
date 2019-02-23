@@ -45,7 +45,7 @@ void invert()
     printf("program took %f seconds to execute \n", time_taken); 
 =======
   // print data
-  printf("Inverted Data: %#08lX\n", *addr);
+  printf("Inverted Data: %#016lx\n", *addr);
   timer = clock() - timer;
   double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
 

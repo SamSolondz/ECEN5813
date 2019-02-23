@@ -1,12 +1,23 @@
 #include "freemem.h"
 
-int freemem()
+void * freemem(void * allocated)
 {
-  void * addr;
-  unsigned long read = 0;
-  printf("Enter the address of the block of memory you would like to free:\nInput: ");
-  scanf("%li", &read);
-  addr = (void *) read;
-  free(addr);
-  return 0;
+  void * removed = allocated + ((words_allocated-1) * word_size);
+
+  if(removed == allocated){
+    free(allocated);
+    printf("Freed memory at address %p\n", removed);
+    printf("User allocated stack is empty.\n");
+  }
+  else
+  {
+    allocated = realloc(allocated, (words_allocated-1) * word_size);
+    if(allocated != 0)
+    {
+      printf("Freed memory at address %p\n", removed);
+      words_allocated--;
+    }
+    else
+      printf("Could not free memory at address %p\n", removed);
+  }
 }
