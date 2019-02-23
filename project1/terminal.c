@@ -6,6 +6,7 @@
 #include "write.h"
 #include "freemem.h"
 #include "displaymem.h"
+#include "invert.h"
 
 void * addresses[10];	//pointer to allocated memory
 int addr_index = 0;
@@ -34,7 +35,7 @@ int main(void)
 			void * allocated = allocate();
 			addresses[addr_index] = allocated;
 
-			printf("Address of allocated %p\n", (void *) addresses[addr_index]);
+			//printf("Address of allocated %p\n", (void *) addresses[addr_index]);
 			addr_index++;
 		}
 		else if(!strcmp(command, "display") | !strcmp(command, "Display"))
@@ -44,6 +45,10 @@ int main(void)
 		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
 		{
 			freemem();
+		}
+		else if(!strcmp(command, "invert") | !strcmp(command, "Invert"))
+		{
+			invert();
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
