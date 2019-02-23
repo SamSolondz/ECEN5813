@@ -29,7 +29,7 @@ void write(void * allocated, int words_allocated)
     	// printf("Data = %li \n", val);
     	// printf("Address = %p\n", addr);
 
-    	printf("Data = %#08lX written to address %p \n", *addr, addr);
+    	printf("Data = %#lx written to address %p \n", *addr, addr);
       return;
     }
   }
