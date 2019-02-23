@@ -1,6 +1,6 @@
 #include "allocate.h"
 
-char * allocate()
+void * allocate()
 {
 	printf("Enter the number of bytes you would like to allocate: ");
 	char byte_read[3];

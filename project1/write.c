@@ -1,7 +1,7 @@
 #include "write.h"
 
 
-void write()
+void write(void * allocated, int words_allocated)
 {
 	// get specified value and specified address from user
   unsigned long *addr = 0;
@@ -15,10 +15,10 @@ void write()
   {
     return;
   }
-
   addr = (unsigned long *) read;
-  for(int j = 0; j < addr_index; j++){
-    if(addr == addresses[j])
+  for(int j = 0; j < words_allocated; j++){
+    unsigned long *comp = (allocated + (words_allocated * BYTES_IN_WORD_64BIT));
+    if(*addr == *comp)
     {
       printf("Enter hex data (ex 0x15) \nInput: ");
       scanf("%li", &val); //TODO: bounds checking

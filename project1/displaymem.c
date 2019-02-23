@@ -7,12 +7,12 @@ void displaymem()
   int numWords = 0;
 
   // get address
-  printf("Enter the starting address of the data to display (ex 0xffffffff): \n");
+  printf("Enter the starting address of the data to display (ex 0xffffffff):\n Input: ");
   scanf("%li", &read);
   addr = (unsigned long * ) read;
 
   // get number of words
-  printf("Enter the number of 32-bit words to display: \n");
+  printf("Enter the number of 32-bit words to display: \nInput: ");
   scanf("%d", &numWords);
 
   // print data
