@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-#define BYTES_IN_WORD_64BIT 8
 
 extern int words_allocated;
+extern int word_size;
 
 void * allocate(void * allocated);

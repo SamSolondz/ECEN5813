@@ -1,18 +1,23 @@
 #include "freemem.h"
 
-void * freemem(void * allocated, int words_allocated)
+void * freemem(void * allocated)
 {
-  // int size = (words_allocated-1) * 8)
-  // int new_size = size - 8;
-  // void * addr = alllocated + size;
-  //
-  // //printf("Memory has not been allocated at that address!\n");
-  //
-  //
-  //
-  // void * copy = realloc(allocated, new_size);
-  //
-  //
-  // free(addr);
-  // return addr;
+  void * removed = allocated + ((words_allocated-1) * word_size);
+
+  if(removed == allocated){
+    free(allocated);
+    printf("Freed memory at address %p\n", removed);
+    printf("User allocated stack is empty.\n");
+  }
+  else
+  {
+    allocated = realloc(allocated, (words_allocated-1) * word_size);
+    if(allocated != 0)
+    {
+      printf("Freed memory at address %p\n", removed);
+      words_allocated--;
+    }
+    else
+      printf("Could not free memory at address %p\n", removed);
+  }
 }

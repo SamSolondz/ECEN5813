@@ -1,5 +1,7 @@
 #include "write.h"
 
+extern int words_allocated;
+extern int word_size;
 
 void write(void * allocated, int words_allocated)
 {
@@ -19,7 +21,7 @@ void write(void * allocated, int words_allocated)
 
   addr = (unsigned long *) read;
   for(int j = 0; j < words_allocated; j++){
-    unsigned long * comp = (allocated + (unsigned long)(j * BYTES_IN_WORD_64BIT));
+    unsigned long * comp = (allocated + (unsigned long)(j * word_size));
     if(addr == comp)
     {
       printf("Enter hex data (ex 0x15) \nInput: ");

@@ -1,4 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void * freemem(void * allocated, int words_allocated);
+extern int words_allocated;
+extern int word_size;
+
+void * freemem();

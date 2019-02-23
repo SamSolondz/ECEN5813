@@ -9,7 +9,7 @@ void * allocate(void * allocated)
 
 	void * new_allocated = 0;
 
-	int new_size = (words_allocated * BYTES_IN_WORD_64BIT) + (word_count * BYTES_IN_WORD_64BIT);
+	int new_size = (words_allocated * word_size) + (word_count * word_size);
 
 	if(allocated = 0)
 		new_allocated = (void *) malloc(new_size);

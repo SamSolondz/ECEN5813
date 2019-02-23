@@ -13,13 +13,13 @@
 //The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
 //Memory edits are done in functions.
 int words_allocated = 0;
+int word_size = sizeof(unsigned long);
 
 int main(void)
 {
 
 	void * allocated = 0;// = malloc(1 * sizeof(*allocated));	//pointer to allocated memory
 //	int size = 1 * sizeof(*allocated);		//returns size in bytes
-
 
 	bool exit = false;
 	while(exit == false)
@@ -43,16 +43,7 @@ int main(void)
 		}
 		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
 		{
-			void * removed = allocated + ((words_allocated-1) * 8);
-			printf("To be freed: %p\n", removed);
-			allocated = realloc(allocated, (words_allocated-1) * 8);
-			if(allocated != 0)
-			{
-				printf("Freed memory at address %p\n", removed);
-				words_allocated--;
-			}
-			else
-				printf("Could not free memory at address %p\n", removed);
+			freemem(allocated);
 		}
 		else if(!strcmp(command, "display") | !strcmp(command, "Display"))
 		{
