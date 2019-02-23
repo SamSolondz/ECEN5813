@@ -45,6 +45,11 @@ int main(void)
 		{
 			freemem();
 		}
+		else if(!strcmp(command, "invert") | !strcmp(command, "Invert"))
+		{
+			invert();
+		}
+
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
 			printf("Bye!\n");
