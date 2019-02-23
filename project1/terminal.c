@@ -10,15 +10,14 @@
 #include "displaymem.h"
 #include "invert.h"
 
-//#define BYTES_IN_WORD_64BIT  8
+//The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
+//Memory edits are done in functions.
 
 int main(void)
 {
 
 	void * allocated = malloc(1 * sizeof(*allocated));	//pointer to allocated memory
 	int size = 1 * sizeof(*allocated);		//returns size in bytes
-	printf("size: %lu\n", sizeof(allocated));
-
 	int words_allocated = 0;
 
 
@@ -40,21 +39,25 @@ int main(void)
 		}
 		else if(!strcmp(command, "allocate") | !strcmp(command, "Allocate"))
 		{
-			void * new_alloc = allocate();
-			size = size + sizeof(*allocated);
-			allocated = realloc(allocated, size);	//make room for more blocks
-			allocated = new_alloc;
+			allocated = allocate(allocated, words_allocated);
+			words_allocated++;
+
+			// unsigned long * new_alloc = allocate();
+			// size = size + sizeof(*allocated);			//calculate new size
+			// allocated = realloc(allocated, size);	//make room for more blocks
+			// unsigned long * add_mem  = allocated + size;	//set a pointer to the new space
+			// *add_mem = *new_alloc;
+			// words_allocated++;
 
 			//printf("Address of allocated %p\n", (void *) addresses[addr_index]);
-			words_allocated++;
+		}
+		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
+		{
+			allocated = realloc(allocated, (size-8));
 		}
 		else if(!strcmp(command, "display") | !strcmp(command, "Display"))
 		{
 			displaymem();
-		}
-		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
-		{
-			freemem();
 		}
 		else if(!strcmp(command, "invert") | !strcmp(command, "Invert"))
 		{
