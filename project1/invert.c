@@ -6,7 +6,7 @@ void invert()
 {
   clock_t timer; 
   timer = clock(); 
-  unsigned long *address = 11215;    // test data... switch back to 0
+  unsigned long *address = 0;    // test data... switch back to 0
   unsigned long numWords = 0;
   unsigned long size = 0;
 
