@@ -53,10 +53,6 @@ int main(void)
 		{
 			invert();
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> e975773a74e5caf689b8f1cb72e20e59429e63b6
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
 			printf("Bye!\n");
