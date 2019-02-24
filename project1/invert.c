@@ -23,13 +23,13 @@ void invert()
   addr = (unsigned long *) read;
 
   // invert data
-  *addr = ~(*addr);      
-    
-  // print data
-  printf("Inverted Data: %#016lX\n", *addr);
+  *addr = ~(*addr);
 
-  timer = clock() - timer; 
-  double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds 
-  
-  printf("Program took %f seconds to execute \n", time_taken); 
+  // print data
+  printf("Inverted Data: %#016lx\n", *addr);
+
+  timer = clock() - timer;
+  double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
+
+  printf("Program took %f seconds to execute \n", time_taken);
 }

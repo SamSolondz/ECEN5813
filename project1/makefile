@@ -10,9 +10,6 @@ TARGET = terminal
 
 OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o
 
-#$(TARGET): $(OBJECTS)
-#	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
-
 terminal: $(OBJECTS)
 	cc -o terminal $(OBJECTS)
 
