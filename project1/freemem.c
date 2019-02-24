@@ -8,6 +8,7 @@ void * freemem(void * allocated)
     free(allocated);
     printf("Freed memory at address %p\n", removed);
     printf("User allocated stack is empty.\n");
+    words_allocated--;
   }
   else
   {
