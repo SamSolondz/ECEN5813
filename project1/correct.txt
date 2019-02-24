@@ -1,0 +1,6 @@
+Address of allocated memory: 0x56512315da80
+Data = 0x7 written to address 0x56512315da80
+Address: 0x56512315da80 & Data: 0x00000000000007
+Address: 0x56512315da88 & Data: 0000000000000000
+Inverted Data: 0xfffffffffffffff8
+Freed memory at address 0x56512315dac8

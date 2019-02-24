@@ -13,23 +13,6 @@ OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o
 terminal: $(OBJECTS)
 	cc -o terminal $(OBJECTS)
 
-test: testallocate testwrite testdisplay testinvert testfree
-
-testallocate:
-	allocate.o < allocateIN.txt
-
-testwrite:
-	write.o < writeIN.txt
-
-testdisplay:
-	displaymem.o < displayIN.txt
-
-testinvert:
-	invert.o < invertIN.txt
-
-testfree:
-	freemem.o
-
 help.o: help.c help.h
 	cc -c help.c
 
@@ -54,6 +37,25 @@ pattern.o: pattern.c pattern.h
 verify.o: verify.c verify.h
 	cc -c verify.c
 
+test: testallocate testwrite testdisplay testinvert testfree testcompare
+
+testallocate:
+	allocate.o < allocateIN.txt > testOut.txt
+
+testwrite:
+	write.o < writeIN.txt > testOut.txt
+
+testdisplay:
+	displaymem.o < displayIN.txt > testOut.txt
+
+testinvert:
+	invert.o < invertIN.txt > testOut.txt
+
+testfree:
+	freemem.o > testOut.txt
+
+testcompare:
+	diff correct.txt testOut.txt
 
 clean:
 	-rm -rf *.o $(OBJECTS)
