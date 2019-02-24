@@ -8,7 +8,7 @@ CFLAGS = -Wall -Werror
 
 TARGET = terminal
 
-OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o
+OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o test.o
 
 terminal: $(OBJECTS)
 	cc -o terminal $(OBJECTS)
@@ -37,7 +37,8 @@ pattern.o: pattern.c pattern.h
 verify.o: verify.c verify.h
 	cc -c verify.c
 
-test:
+test.o: test.c
+	cc -c test.c
 	test.c < testIN.txt > testOut.txt
 	diff correct.txt testOut.txt
 

@@ -11,7 +11,7 @@ extern int word_size;
 extern void * addresses[10];
 extern int addr_index;
 
-int test(){
+void test(){
 FILE *f = fopen("testOut.txt", "w");
 if(f == NULL)
 {
@@ -20,6 +20,7 @@ if(f == NULL)
 }
 
 // test allocate
+	void * allocated = 0;
 	printf("Enter the number of words you would like to allocate: ");
 	char word_read[3];
 	scanf("%s", word_read); 	
@@ -38,7 +39,7 @@ if(f == NULL)
 	if(new_allocated == NULL)
 	{
 		printf("Memory could not be allocated.\n");
-		return NULL;
+
 	}
 	fprintf(f, "Address of allocated memory: %p\n", new_allocated);   //show user address of allocated memory
 	words_allocated += word_count;
@@ -78,14 +79,14 @@ if(f == NULL)
   	printf("Memory has not been allocated at that address!\n");
   
 // test display
-	unsigned long * addr = 0;
-	unsigned long read = 0;
+	unsigned long * address = 0;
+	unsigned long red = 0;
 	int numWords = 0;
 
 	// get address
 	printf("Enter the starting address of the data to display (ex 0xffffffff):\nInput: ");
-	scanf("%li", &read);
-	addr = (unsigned long * ) read;
+	scanf("%li", &red);
+	addr = (unsigned long * ) red;
 
 	// get number of words
 	fprintf(f, "You've allocated %d words. Enter the number of words you wish to display \nInput: ", words_allocated);
@@ -94,7 +95,7 @@ if(f == NULL)
 	// print data
 	for(int i = 0; i < numWords; i++)
 	{
-		fprintf(f, "Address: %p & Data: %#016lx\n", addr + i, *(addr + i));
+		fprintf(f, "Address: %p & Data: %#016lx\n", address + i, *(address + i));
 	}
 	
 // test invert
@@ -102,25 +103,25 @@ if(f == NULL)
 	clock_t timer;
 	timer = clock();
 
-	unsigned long *addr = 0;    // test data... switch back to 0
-	unsigned long read = 0;
+	unsigned long *add = 0;    // test data... switch back to 0
+	unsigned long reed = 0;
 
 	// get address
 	printf("Enter the address of the data to invert (ex 0xffffffff): \nInput: ");
-	scanf("%li", &read); //pointer to pointer
-	if(read == 0)
+	scanf("%li", &reed); //pointer to pointer
+	if(reed == 0)
 	{
 		printf("Memory at that address has not been allocated!\n");
 		return;
 	}
 
-	addr = (unsigned long *) read;
+	add = (unsigned long *) reed;
 	
 	// invert data
-	*addr = ~(*addr);
+	*add = ~(*add);
 
 	// print data
-	fprintf(f, "Inverted Data: %#016lx\n", *addr);
+	fprintf(f, "Inverted Data: %#016lx\n", *add);
 
 	timer = clock() - timer;
 	double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
