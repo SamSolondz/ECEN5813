@@ -13,6 +13,23 @@ OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o
 terminal: $(OBJECTS)
 	cc -o terminal $(OBJECTS)
 
+test: testallocate testwrite testdisplay testinvert testfree
+
+testallocate:
+	allocate.o < allocateIN.txt
+
+testwrite:
+	write.o < writeIN.txt
+
+testdisplay:
+	displaymem.o < displayIN.txt
+
+testinvert:
+	invert.o < invertIN.txt
+
+testfree:
+	freemem.o
+
 help.o: help.c help.h
 	cc -c help.c
 
