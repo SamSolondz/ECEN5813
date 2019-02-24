@@ -37,24 +37,8 @@ pattern.o: pattern.c pattern.h
 verify.o: verify.c verify.h
 	cc -c verify.c
 
-test: testallocate testwrite testdisplay testinvert testfree testcompare
-
-testallocate:
-	allocate.o < allocateIN.txt > testOut.txt
-
-testwrite:
-	write.o < writeIN.txt > testOut.txt
-
-testdisplay:
-	displaymem.o < displayIN.txt > testOut.txt
-
-testinvert:
-	invert.o < invertIN.txt > testOut.txt
-
-testfree:
-	freemem.o > testOut.txt
-
-testcompare:
+test:
+	test.c < testIN.txt > testOut.txt
 	diff correct.txt testOut.txt
 
 clean:
