@@ -17,9 +17,7 @@ int word_size = sizeof(unsigned long);
 
 int main(void)
 {
-
-	void * allocated = 0;// = malloc(1 * sizeof(*allocated));	//pointer to allocated memory
-//	int size = 1 * sizeof(*allocated);		//returns size in bytes
+	void * allocated = 0;
 
 	bool exit = false;
 	while(exit == false)
@@ -27,8 +25,7 @@ int main(void)
 		printf("\n------------------------------------------------------------------\n");
 		printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 	  char command[16];
-		printf("Command: ");
-	        scanf("%15s", command); 	//TODO: protect against a user input that is too long.
+	  scanf("%15s", command); 	//TODO: protect against a user input that is too long.
 		if(sizeof(command) > 20)
 		{
 			printf("\nCommand not recognized, try again\n");
@@ -43,15 +40,15 @@ int main(void)
 		}
 		else if(!strcmp(command, "free") | !strcmp(command, "Free"))
 		{
-			freemem(allocated);
+			allocated = freemem(allocated);
 		}
 		else if(!strcmp(command, "display") | !strcmp(command, "Display"))
 		{
-			displaymem();
+			displaymem(allocated);
 		}
 		else if(!strcmp(command, "invert") | !strcmp(command, "Invert"))
 		{
-			invert();
+			invert(allocated);
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{

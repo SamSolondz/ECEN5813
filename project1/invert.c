@@ -1,8 +1,8 @@
 #include "invert.h"
 
-void invert()
-    // invert all memory bits in specified area of memory
-    // report time to perform op.
+// invert all memory bits in specified area of memory
+// report time to perform op.
+void invert(void * allocated)
 {
   // calculate function time (geeksforgeeks.org)
   clock_t timer;
@@ -12,15 +12,32 @@ void invert()
   unsigned long read = 0;
 
   // get address
-  printf("Enter the address of the data to invert (ex 0xffffffff): \nInput: ");
+  printf("(Invert)\n");
+  printf("Enter a hex address of memory to invert (ex 0xf4ac23df)\n");
+  if(allocated != 0)
+    printf("Type '0' for the first allocated address.\n");
+
   scanf("%li", &read); //pointer to pointer
   if(read == 0)
+    addr = (unsigned long *) allocated;
+  else
+    addr = (unsigned long *) read;
+
+//Check that address is within allocated memory
+  void * test;
+  int valid = false;
+  for(int i = 0; i < words_allocated; i++)
   {
-    printf("Memory at that address has not been allocated!\n");
+    test = allocated + (i * word_size);
+    if(test == addr)
+      valid = true;
+  }
+  if(valid == false)
+  {
+    printf("Memory has not been allocated at that address!\n");
     return;
   }
 
-  addr = (unsigned long *) read;
 
   // invert data
   *addr = ~(*addr);
@@ -32,4 +49,5 @@ void invert()
   double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
 
   printf("Program took %f seconds to execute \n", time_taken);
+  return;
 }

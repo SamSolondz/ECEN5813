@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
-void invert();
+extern int words_allocated;
+extern int word_size;
+void invert(void * allocated);

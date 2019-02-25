@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <stdbool.h>
 extern void * addresses[10];
-extern int addr_index;
-extern int words_allocated;
 
-void displaymem();
+extern int words_allocated;
+extern int word_size;
+
+void displaymem(void * allocated);

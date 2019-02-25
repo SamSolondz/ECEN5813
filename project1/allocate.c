@@ -2,12 +2,12 @@
 
 void * allocate(void * allocated)
 {
-	printf("Enter the number of words you would like to allocate: ");
-	char word_read[3];
-	scanf("%s", word_read); 	
-	
-	int word_count = atol(word_read);
+	printf("(Allocate)\n");
+	printf("Enter the number of words you would like to allocate:\n");
+	char word_read[20];
+	scanf("%s", word_read);
 
+	int word_count = atol(word_read);
 	void * new_allocated = 0;
 
 	int new_size = (words_allocated * word_size) + (word_count * word_size);

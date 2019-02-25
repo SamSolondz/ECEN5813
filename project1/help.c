@@ -2,6 +2,7 @@
 
 void help()
 {
+	printf("(Help)\n");
 	printf("---Commands available---\n");
 	printf("'Allocate' memory\t Allocate a block of memory. User specifies the number of or words to be allocated.\n");
 	printf("'Free' memory\t\t Release the previously allocated block.\n");

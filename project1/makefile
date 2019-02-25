@@ -37,7 +37,11 @@ pattern.o: pattern.c pattern.h
 verify.o: verify.c verify.h
 	cc -c verify.c
 
-
 clean:
 	-rm -rf *.o $(OBJECTS)
 	-rm -rf $(TARGET)
+	-rm -rf output
+
+test:
+	-rm -rf output
+	./terminal < testscript > output
