@@ -40,8 +40,8 @@ verify.o: verify.c verify.h
 clean:
 	-rm -rf *.o $(OBJECTS)
 	-rm -rf $(TARGET)
-	-rm -rf output
+	-rm -rf testoutput
 
 test:
-	-rm -rf output
+	-rm -rf testoutput
 	./terminal < testscript > testoutput
