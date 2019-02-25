@@ -44,4 +44,4 @@ clean:
 
 test:
 	-rm -rf output
-	./terminal < testscript > output
+	./terminal < testscript > testoutput
