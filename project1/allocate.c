@@ -12,7 +12,7 @@ void * allocate(void * allocated)
 
 	int new_size = (words_allocated * word_size) + (word_count * word_size);
 
-	if(allocated = 0)
+	if(allocated == 0)
 		new_allocated = (void *) malloc(new_size);
 	else
 		new_allocated = (void *) realloc(allocated, new_size);
