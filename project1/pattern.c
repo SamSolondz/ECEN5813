@@ -69,7 +69,6 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       if(sel == 0)                           //write only on write_pattern;
         *(addr + i) = pattern[i+1];
   }
-  printf("sel: %d\n", sel);
   if(sel == 0)                  //write_pattern is done
     timer = clock() - timer;
   else
