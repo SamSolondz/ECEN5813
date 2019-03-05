@@ -9,7 +9,7 @@
 #include "freemem.h"
 #include "displaymem.h"
 #include "invert.h"
-#include "write_pattern.h"
+#include "pattern.h"
 
 //The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
 //Memory edits are done in functions.
@@ -63,7 +63,11 @@ int main(void)
 		}
 		else if(!strcmp(command, "write_pattern") | !strcmp(command, "Write_Pattern"))
 		{
-			write_pattern(allocated);
+			pattern(allocated, 0);
+		}
+		else if(!strcmp(command, "verify_pattern") | !strcmp(command, "Verify_Pattern"))
+		{
+			pattern(allocated, 1);
 		}
 
 		else

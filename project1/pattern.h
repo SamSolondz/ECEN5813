@@ -5,4 +5,4 @@
 extern int word_size;
 extern int words_allocated;
 
-void write_pattern(void * allocated, int sel);
+void pattern(void * allocated, int sel);
