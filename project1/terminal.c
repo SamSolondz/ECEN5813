@@ -63,7 +63,7 @@ int main(void)
 		}
 		else if(!strcmp(command, "write_pattern") | !strcmp(command, "Write_Pattern"))
 		{
-			write_pattern();
+			write_pattern(allocated);
 		}
 
 		else
