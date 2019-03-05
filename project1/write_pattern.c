@@ -22,18 +22,33 @@ void write_pattern(void * allocated)
   else
     addr = (unsigned long *) read;
 
+//Check that address is within allocated memory
+  void * test;
+  int valid = false;
+  for(int i = 0; i < words_allocated; i++)
+  {
+    test = allocated + (i * word_size);
+    if(test == addr)
+      valid = true;
+  }
+  if(valid == false)
+  {
+    printf("Memory has not been allocated at that address!\n");
+    return;
+  }
+
   printf("Enter a seed value to generate the pattern.\n");
   scanf("%lu", &seed);
   printf("How many numbers would you to generate and store?\n");
   scanf("%u", &num);
+
   // print pattern start
   printf("Requested pattern: ");
-
   // determine random numbers and print pattern numbers
   pattern[0] = (int) seed;      //store the seed value so we can work off that
   for (int i=1; i<=num; i++)
   {
-      pattern[i] = (2*pattern[i-1] + 0) % 9;
+      pattern[i] = (2*pattern[i-1] + 0) % 9;  //use the last value for the new value
       printf("%d, ", pattern[i]);
       *(addr + (i-1)) = pattern[i];
   }
