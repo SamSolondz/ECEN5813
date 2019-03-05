@@ -5,7 +5,6 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   unsigned long * addr = 0;
   unsigned long read = 0;
   int pattern_len = 0;
-  int pattern[pattern_len];
   double functionTiming;
   clock_t timer;
 
@@ -56,17 +55,19 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
     printf("How many addresses would you to check?\n");
 
   scanf("%d", &pattern_len);
+  int pattern[pattern_len+1];
+
 
   printf("Generated pattern: ");
   // determine random numbers and print pattern numbers
   timer = clock();              //start counting here since we want to time the operation
   pattern[0] = (int) seed;      //store the seed value so we can work off that
-  for (int i=1; i<=pattern_len; i++)
+  for (int i=0; i<pattern_len; i++)
   {
-      pattern[i] = (2*pattern[i-1] + 0) % 9;  //use the last value for the new value
-      printf("%d, ", pattern[i]);
+      pattern[i+1] = (2*pattern[i] + 0) % 9;  //use the last value for the new value
+      printf("%d, ", pattern[i+1]);
       if(sel == 0)                           //write only on write_pattern;
-        *(addr + (i-1)) = pattern[i];
+        *(addr + i) = pattern[i+1];
   }
   printf("sel: %d\n", sel);
   if(sel == 0)                  //write_pattern is done
@@ -80,6 +81,7 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       actual[j] = *(int *)(addr+j);
       if(actual[j] != pattern[j+1])
         valid_pattern = false;
+      printf("actual: %d, pattern: %d\n", actual[j], pattern[j+1]);
     }
 
     if(valid_pattern == false)
