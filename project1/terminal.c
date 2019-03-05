@@ -9,6 +9,7 @@
 #include "freemem.h"
 #include "displaymem.h"
 #include "invert.h"
+#include "write_pattern.h"
 
 //The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
 //Memory edits are done in functions.
@@ -25,7 +26,7 @@ int main(void)
 		printf("\n------------------------------------------------------------------\n");
 		printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
 	  char command[16];
-	  scanf("%15s", command); 	//TODO: protect against a user input that is too long.
+	  scanf("%25s", command); 	//TODO: protect against a user input that is too long.
 		if(sizeof(command) > 20)
 		{
 			printf("\nCommand not recognized, try again\n");
@@ -60,6 +61,11 @@ int main(void)
 		{
 			write(allocated, words_allocated);
 		}
+		else if(!strcmp(command, "write_pattern") | !strcmp(command, "Write_Pattern"))
+		{
+			write_pattern();
+		}
+
 		else
 		{
 			printf("\nFunction not yet implemented, try again later.\n");
