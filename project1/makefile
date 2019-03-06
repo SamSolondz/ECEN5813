@@ -34,8 +34,8 @@ terminal: $(OBJECTS)
 # invert.o: invert.c invert.h
 # 	cc -c invert.c
 #
-# writePattern.o: writePattern.c writePattern.h
-# 	cc -c writePattern.c
+# write_pattern.o: write_pattern.c write_pattern.h
+# 	cc -c write_pattern.c
 #
 # verify.o: verify.c verify.h
 # 	cc -c verify.c
