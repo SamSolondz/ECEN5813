@@ -61,11 +61,11 @@ int main(void)
 		{
 			write(allocated, words_allocated);
 		}
-		else if(!strcmp(command, "write_pattern") | !strcmp(command, "Write_Pattern"))
+		else if(!strcmp(command, "pattern") | !strcmp(command, "Pattern"))
 		{
 			pattern(allocated, 0);
 		}
-		else if(!strcmp(command, "verify_pattern") | !strcmp(command, "Verify_Pattern"))
+		else if(!strcmp(command, "verify") | !strcmp(command, "Verify"))
 		{
 			pattern(allocated, 1);
 		}

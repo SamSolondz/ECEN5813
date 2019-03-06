@@ -13,11 +13,11 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   switch (sel) {
     case 0:         //write Pattern
       printf("(Write Pattern)\n\n");
-      printf("Enter a starting address to store pattern.\n");
+      printf("Enter a starting address to store the pattern.\n");
       break;
     case 1:         //write Pattern
       printf("(Verify Pattern)\n\n");
-      printf("Enter a starting address to verify a pattern.\n");
+      printf("Enter a starting address to verify the pattern.\n");
       break;
     default:
       printf("Pattern error\n");
@@ -50,9 +50,9 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   scanf("%lu", &seed);
 
   if(sel == 0)
-    printf("How many numbers would you to generate and store?\n");
+    printf("How many numbers would you like to generate and store?\n");
   else
-    printf("How many addresses would you to check?\n");
+    printf("How many addresses would you like to check?\n");
 
   scanf("%d", &pattern_len);
   int pattern[pattern_len+1];
@@ -62,13 +62,23 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   // determine random numbers and print pattern numbers
   timer = clock();              //start counting here since we want to time the operation
   pattern[0] = (int) seed;      //store the seed value so we can work off that
+  int c = 0;
+  int module = 27;
+
+  if(seed == 0)
+      c = 5;
+
   for (int i=0; i<pattern_len; i++)
   {
-      pattern[i+1] = (2*pattern[i] + 0) % 9;  //use the last value for the new value
+      if((2*pattern[i] + c) == 27)
+	  c = 11;
+
+      pattern[i+1] = (2*pattern[i] + c) % module;  //use the last value for the new value
       printf("%d, ", pattern[i+1]);
       if(sel == 0)                           //write only on write_pattern;
         *(addr + i) = pattern[i+1];
   }
+
   if(sel == 0)                  //write_pattern is done
     timer = clock() - timer;
   else
@@ -80,7 +90,7 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       actual[j] = *(int *)(addr+j);
       if(actual[j] != pattern[j+1])
         valid_pattern = false;
-      printf("actual: %d, pattern: %d\n", actual[j], pattern[j+1]);
+      printf("\nIn memory: %d, Expected: %d\n", actual[j], pattern[j+1]);
     }
 
     if(valid_pattern == false)
