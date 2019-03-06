@@ -51,9 +51,9 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   scanf("%lu", &seed);
 
   if(sel == 0)
-    printf("How many numbers would you to generate and store?\n");
+    printf("How many numbers would you like to generate and store?\n");
   else
-    printf("How many addresses would you to check?\n");
+    printf("How many addresses would you like to check?\n");
 
   scanf("%d", &pattern_len);
 
