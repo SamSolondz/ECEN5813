@@ -22,21 +22,38 @@ void write(void * allocated, int words_allocated)
 	else
 		addr = (unsigned long *) read;
 
-	for(int j = 0; j < words_allocated; j++)
-	{
-  		unsigned long * comp = (allocated + (unsigned long)(j * word_size));
-    		if(addr == comp)
-    		{
-					printf("\nMaximum size for input data is %li.  \nIf input data exceeds maximum size, 0x7fffffffffffffff will be the input. \n\n", LONG_MAX);
-					printf("Enter hex data (ex 0x15) \n");
-      		scanf("%li", &val);
 
-      		*addr = val;
+	//Check that address is within allocated memory
+	void * test;
+	int valid = false;
+	for(int i = 0; i < words_allocated; i++){
+		test = allocated + (i * word_size);
+		if(test == addr)
+	  	valid = true;
+	 }
+	 if(valid == false){
+	  	printf("Warning: Memory has not been allocated at that address.\nDo you wish to write to this address? (y/n)\n");
+		  char response;
+			scanf(" %c", &response); //pointer to pointer
+			switch (response) {
+				case 'y':
+					break;
+				case 'n':
+				default:
+					printf("Write operation aborted.\n");
+					return;
+					break;
+			}
+		}
 
-    			printf("Data = %#lx written to address %p \n", *addr, addr);
-      			return;
-    		}
-  }
-	printf("Memory has not been allocated at that address!\n");
-  return;
+			printf("\nMaximum size for input data is %li.  \nIf input data exceeds maximum size, 0x7fffffffffffffff will be the input. \n\n", LONG_MAX);
+			printf("Enter hex data (ex 0x15) \n");
+      scanf("%li", &val);
+
+			*addr = val;
+
+    	printf("Data = %#lx written to address %p \n", *addr, addr);
+      return;
+
+
 }
