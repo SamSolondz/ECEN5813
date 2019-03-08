@@ -90,17 +90,17 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       printf("\nPattern is not valid!\nValues found:\n");
       for(int j = 0; j < pattern_len; j++)
       {
-        printf("Address: %p & Data: %d; Expected Value: %d", addr + j, actual[j], pattern[j+1]);
+        printf("Address: %p & Data: %d; Expected Value: %d\n", addr + j, actual[j], pattern[j+1]);
       }
 
     }
     else
-      printf("\nPattern is valid!");
+      printf("\nPattern is valid!\n");
 
     timer = clock() - timer;      //verify_pattern is done
   }
 
   functionTiming = ((double)timer)/CLOCKS_PER_SEC;
-  printf("\nwrite_pattern took %lf seconds to complete.\n", functionTiming);
+  printf("write_pattern took %lf seconds to complete.\n", functionTiming);
 
 }
