@@ -68,6 +68,8 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       printf("%d", pattern[i+1]);
       if(i != pattern_len-1)
 	printf(", ");
+      if(i == pattern_len-1)
+	printf("\n");
       if(sel == 0)                           //write only on write_pattern;
         *(addr + i) = pattern[i+1];
   }
