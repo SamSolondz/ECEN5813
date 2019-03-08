@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "check_address.h"
 extern void * addresses[10];
 
 extern int words_allocated;

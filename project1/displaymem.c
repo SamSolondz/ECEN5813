@@ -18,20 +18,10 @@ void displaymem(void * allocated)
   else
     addr = (unsigned long *) read;
 
-//Check that address is within allocated memory
-  void * test;
-  int valid = false;
-  for(int i = 0; i < words_allocated; i++)
-  {
-    test = allocated + (i * word_size);
-    if(test == addr)
-      valid = true;
-  }
-  if(valid == false)
-  {
-    printf("Memory has not been allocated at that address!\n");
-    return;
-  }
+  //Check if address is within allocated memory
+  bool abort = check_address(allocated, addr);
+  if(abort == true)
+  	return;
 
   // get number of words
   printf("You've allocated %d words. Enter the number of words you wish to display:\n", words_allocated);
@@ -41,7 +31,7 @@ void displaymem(void * allocated)
   for(int i = 0; i < numWords; i++)
   {
       if((addr + i) == NULL)
-        printf("Cannot display memory at %p.\n", addr + i);
+        printf("Cannot display memory at %lu.\n", (unsigned long) addr + i);
       else
         printf("Address: %p & Data: %#016lx\n", addr + i, *(addr + i));
   }

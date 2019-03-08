@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include "check_address.h"
+
 extern int word_size;
 extern int words_allocated;
 

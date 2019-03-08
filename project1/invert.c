@@ -23,21 +23,10 @@ void invert(void * allocated)
   else
     addr = (unsigned long *) read;
 
-//Check that address is within allocated memory
-  void * test;
-  int valid = false;
-  for(int i = 0; i < words_allocated; i++)
-  {
-    test = allocated + (i * word_size);
-    if(test == addr)
-      valid = true;
-  }
-  if(valid == false)
-  {
-    printf("Memory has not been allocated at that address!\n");
-    return;
-  }
-
+  //Check if address is within allocated memory
+  bool abort = check_address(allocated, addr);
+  if(abort == true)
+  	return;
 
   // invert data
   *addr = ~(*addr);

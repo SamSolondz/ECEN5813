@@ -8,7 +8,7 @@ CFLAGS = -Wall -Werror
 
 TARGET = terminal
 
-OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o pattern.o
+OBJECTS = terminal.o help.o allocate.o write.o freemem.o displaymem.o invert.o pattern.o check_address.o
 
 terminal: $(OBJECTS)
 	cc -o terminal $(OBJECTS)

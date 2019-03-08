@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <limits.h>
+#include "check_address.h"
+
 
 #define BYTES_IN_WORD_64BIT 8
 
