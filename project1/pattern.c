@@ -65,7 +65,9 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
 	  c = 11;
 
       pattern[i+1] = (2*pattern[i] + c) % module;  //use the last value for the new value
-      printf("%d, ", pattern[i+1]);
+      printf("%d", pattern[i+1]);
+      if(i != pattern_len-1)
+	printf(", ");
       if(sel == 0)                           //write only on write_pattern;
         *(addr + i) = pattern[i+1];
   }
@@ -81,7 +83,6 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       actual[j] = *(int *)(addr+j);
       if(actual[j] != pattern[j+1])
         valid_pattern = false;
-      printf("\nIn memory: %d, Expected: %d\n", actual[j], pattern[j+1]);
     }
 
     if(valid_pattern == false)
@@ -89,12 +90,12 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       printf("\nPattern is not valid!\nValues found:\n");
       for(int j = 0; j < pattern_len; j++)
       {
-        printf("Address: %p & Data: %#016lx\n", addr + j, (unsigned long)actual[j]);
+        printf("Address: %p & Data: %d; Expected Value: %d\n", addr + j, actual[j], pattern[j+1]);
       }
 
     }
     else
-      printf("\nPattern is valid!\n");
+      printf("\nPattern is valid!");
 
     timer = clock() - timer;      //verify_pattern is done
   }
