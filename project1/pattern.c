@@ -90,7 +90,7 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       printf("\nPattern is not valid!\nValues found:\n");
       for(int j = 0; j < pattern_len; j++)
       {
-        printf("Address: %p & Data: %d; Expected Value: %d\n", addr + j, actual[j], pattern[j+1]);
+        printf("Address: %p & Data: %d; Expected Value: %d", addr + j, actual[j], pattern[j+1]);
       }
 
     }
