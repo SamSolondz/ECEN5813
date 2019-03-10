@@ -23,4 +23,5 @@ bool check_address(void * allocated, unsigned long * addr)
     	  return true;
       }
    }
+   return false;
 }

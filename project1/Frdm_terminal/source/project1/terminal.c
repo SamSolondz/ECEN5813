@@ -12,19 +12,18 @@
 #include "pattern.h"
 #include "readin.h"
 
-
+#ifndef LINUX
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "board.h"
 #include "pin_mux.h"
 #define printf PRINTF
+#endif
 
 //The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
 //Memory edits are done in functions.
 int words_allocated = 0;
 int word_size = sizeof(unsigned long);
-
-
 
 int main(void)
 {

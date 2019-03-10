@@ -1587,74 +1587,74 @@ OUTPUT(sample_demo_apps_hello_world.axf elf32-littlearm)
  .debug_ranges  0x00000000000006f8       0x20 ./board/pin_mux.o
  .debug_ranges  0x0000000000000718       0x18 ./CMSIS/system_MKL25Z4.o
 
-.debug_line     0x0000000000000000     0x3e15
+.debug_line     0x0000000000000000     0x3e1b
  .debug_line    0x0000000000000000      0x63e ./utilities/fsl_debug_console.o
  .debug_line    0x000000000000063e      0x128 ./startup/startup_mkl25z4.o
  .debug_line    0x0000000000000766      0x1df ./source/project1/allocate.o
- .debug_line    0x0000000000000945      0x1ee ./source/project1/check_address.o
- .debug_line    0x0000000000000b33      0x20f ./source/project1/displaymem.o
- .debug_line    0x0000000000000d42      0x1da ./source/project1/freemem.o
- .debug_line    0x0000000000000f1c      0x1c4 ./source/project1/help.o
- .debug_line    0x00000000000010e0      0x1ec ./source/project1/invert.o
- .debug_line    0x00000000000012cc      0x258 ./source/project1/pattern.o
- .debug_line    0x0000000000001524      0x1d6 ./source/project1/readin.o
- .debug_line    0x00000000000016fa      0x215 ./source/project1/terminal.o
- .debug_line    0x000000000000190f      0x1f5 ./source/project1/write.o
- .debug_line    0x0000000000001b04       0x30 ./source/mtb.o
- .debug_line    0x0000000000001b34      0x19e ./source/retarget_itm.o
- .debug_line    0x0000000000001cd2      0x940 ./drivers/fsl_clock.o
- .debug_line    0x0000000000002612      0x24e ./drivers/fsl_common.o
- .debug_line    0x0000000000002860      0x6f3 ./drivers/fsl_lpsci.o
- .debug_line    0x0000000000002f53      0x6f6 ./drivers/fsl_uart.o
- .debug_line    0x0000000000003649      0x1c3 ./board/board.o
- .debug_line    0x000000000000380c      0x25d ./board/clock_config.o
- .debug_line    0x0000000000003a69      0x1db ./board/pin_mux.o
- .debug_line    0x0000000000003c44      0x1d1 ./CMSIS/system_MKL25Z4.o
+ .debug_line    0x0000000000000945      0x1f4 ./source/project1/check_address.o
+ .debug_line    0x0000000000000b39      0x20f ./source/project1/displaymem.o
+ .debug_line    0x0000000000000d48      0x1da ./source/project1/freemem.o
+ .debug_line    0x0000000000000f22      0x1c4 ./source/project1/help.o
+ .debug_line    0x00000000000010e6      0x1ec ./source/project1/invert.o
+ .debug_line    0x00000000000012d2      0x258 ./source/project1/pattern.o
+ .debug_line    0x000000000000152a      0x1d6 ./source/project1/readin.o
+ .debug_line    0x0000000000001700      0x215 ./source/project1/terminal.o
+ .debug_line    0x0000000000001915      0x1f5 ./source/project1/write.o
+ .debug_line    0x0000000000001b0a       0x30 ./source/mtb.o
+ .debug_line    0x0000000000001b3a      0x19e ./source/retarget_itm.o
+ .debug_line    0x0000000000001cd8      0x940 ./drivers/fsl_clock.o
+ .debug_line    0x0000000000002618      0x24e ./drivers/fsl_common.o
+ .debug_line    0x0000000000002866      0x6f3 ./drivers/fsl_lpsci.o
+ .debug_line    0x0000000000002f59      0x6f6 ./drivers/fsl_uart.o
+ .debug_line    0x000000000000364f      0x1c3 ./board/board.o
+ .debug_line    0x0000000000003812      0x25d ./board/clock_config.o
+ .debug_line    0x0000000000003a6f      0x1db ./board/pin_mux.o
+ .debug_line    0x0000000000003c4a      0x1d1 ./CMSIS/system_MKL25Z4.o
 
-.debug_str      0x0000000000000000     0x3e06
+.debug_str      0x0000000000000000     0x3e36
  .debug_str     0x0000000000000000      0xcdd ./utilities/fsl_debug_console.o
                                         0xd61 (size before relaxing)
  .debug_str     0x0000000000000cdd      0x394 ./startup/startup_mkl25z4.o
                                         0x4c6 (size before relaxing)
  .debug_str     0x0000000000001071      0x45b ./source/project1/allocate.o
                                         0x69a (size before relaxing)
- .debug_str     0x00000000000014cc       0x44 ./source/project1/check_address.o
-                                        0x690 (size before relaxing)
- .debug_str     0x0000000000001510       0x4e ./source/project1/displaymem.o
-                                        0x69e (size before relaxing)
- .debug_str     0x000000000000155e       0x2d ./source/project1/freemem.o
+ .debug_str     0x00000000000014cc       0x74 ./source/project1/check_address.o
                                         0x668 (size before relaxing)
- .debug_str     0x000000000000158b       0x1f ./source/project1/help.o
+ .debug_str     0x0000000000001540       0x4e ./source/project1/displaymem.o
+                                        0x69e (size before relaxing)
+ .debug_str     0x000000000000158e       0x2d ./source/project1/freemem.o
+                                        0x668 (size before relaxing)
+ .debug_str     0x00000000000015bb       0x1f ./source/project1/help.o
                                         0x636 (size before relaxing)
- .debug_str     0x00000000000015aa       0x3c ./source/project1/invert.o
+ .debug_str     0x00000000000015da       0x3c ./source/project1/invert.o
                                         0x69c (size before relaxing)
- .debug_str     0x00000000000015e6       0x59 ./source/project1/pattern.o
+ .debug_str     0x0000000000001616       0x59 ./source/project1/pattern.o
                                         0x6cf (size before relaxing)
- .debug_str     0x000000000000163f       0x2b ./source/project1/readin.o
+ .debug_str     0x000000000000166f       0x2b ./source/project1/readin.o
                                         0x653 (size before relaxing)
- .debug_str     0x000000000000166a       0x33 ./source/project1/terminal.o
+ .debug_str     0x000000000000169a       0x33 ./source/project1/terminal.o
                                         0xaff (size before relaxing)
- .debug_str     0x000000000000169d       0x1b ./source/project1/write.o
-                                        0x68c (size before relaxing)
- .debug_str     0x00000000000016b8       0x1f ./source/mtb.o
+ .debug_str     0x00000000000016cd       0x1b ./source/project1/write.o
+                                        0x669 (size before relaxing)
+ .debug_str     0x00000000000016e8       0x1f ./source/mtb.o
                                         0x150 (size before relaxing)
- .debug_str     0x00000000000016d7       0x5b ./source/retarget_itm.o
+ .debug_str     0x0000000000001707       0x5b ./source/retarget_itm.o
                                         0x247 (size before relaxing)
- .debug_str     0x0000000000001732      0xde5 ./drivers/fsl_clock.o
+ .debug_str     0x0000000000001762      0xde5 ./drivers/fsl_clock.o
                                        0x17f1 (size before relaxing)
- .debug_str     0x0000000000002517      0x302 ./drivers/fsl_common.o
+ .debug_str     0x0000000000002547      0x302 ./drivers/fsl_common.o
                                         0x513 (size before relaxing)
- .debug_str     0x0000000000002819      0x9c2 ./drivers/fsl_lpsci.o
+ .debug_str     0x0000000000002849      0x9c2 ./drivers/fsl_lpsci.o
                                        0x15b9 (size before relaxing)
- .debug_str     0x00000000000031db      0x819 ./drivers/fsl_uart.o
+ .debug_str     0x000000000000320b      0x819 ./drivers/fsl_uart.o
                                        0x15c5 (size before relaxing)
- .debug_str     0x00000000000039f4       0x4c ./board/board.o
+ .debug_str     0x0000000000003a24       0x4c ./board/board.o
                                         0x69a (size before relaxing)
- .debug_str     0x0000000000003a40      0x222 ./board/clock_config.o
+ .debug_str     0x0000000000003a70      0x222 ./board/clock_config.o
                                         0xdc3 (size before relaxing)
- .debug_str     0x0000000000003c62      0x155 ./board/pin_mux.o
+ .debug_str     0x0000000000003c92      0x155 ./board/pin_mux.o
                                         0x5ce (size before relaxing)
- .debug_str     0x0000000000003db7       0x4f ./CMSIS/system_MKL25Z4.o
+ .debug_str     0x0000000000003de7       0x4f ./CMSIS/system_MKL25Z4.o
                                         0x332 (size before relaxing)
 
 .comment        0x0000000000000000       0x7f
