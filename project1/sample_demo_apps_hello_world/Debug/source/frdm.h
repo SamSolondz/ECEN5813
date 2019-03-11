@@ -8,7 +8,7 @@
 #ifndef PROJECT1_FRDM_H_
 #define PROJECT1_FRDM_H_
 
-#define FRDM 1
+//#define FRDM 1
 #ifdef FRDM
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"

@@ -13,11 +13,11 @@ bool check_address(void * allocated, unsigned long * addr)
    if(valid == false)
    {
 	   printf("\n\rWarning: Memory has not been allocated at that address!\n\rDo you wish to proceed? (y/n)\n\r");
-  	  char response[2];
+  	  char response[5];
 	  #ifdef FRDM
   	  	  readin(response, sizeof(response));
 	  #else
-  	  	  scanf("%c", &response);
+  	  	  scanf("%5s", response);
 	  #endif
       if (!strcmp(response, "y") | !strcmp(response, "Y"))
     	  return false;

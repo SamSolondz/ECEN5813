@@ -18,7 +18,6 @@ CMSIS \
 board \
 drivers \
 source \
-source/project1 \
 startup \
 utilities \
 

@@ -66,7 +66,7 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
 	   readin(read_char, sizeof(read_char));
 	   pattern_len = atoi(read_char);
 	#else
-		scanf("%d", &pattern); //pointer to pointer
+		scanf("%d", &pattern_len); //pointer to pointer
 	#endif
   int pattern[pattern_len+1];
 

@@ -14,7 +14,7 @@
 #include "frdm.h"
 
 
-//#define FRDM	1
+//#define FRDM	1 //uncommment this to run on the FRDM-KL25Z eval board
 
 #ifdef FRDM
 #include "fsl_device_registers.h"
@@ -31,13 +31,14 @@ int word_size = sizeof(unsigned long);
 
 int main(void)
 {
+  #ifdef FRDM
+  /* Init board hardware. */
+  BOARD_InitPins();
+  BOARD_BootClockRUN();
+  BOARD_InitDebugConsole();
+  #endif
 
-    /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-
-	void * allocated = 0;
+  void * allocated = 0;
 
 	bool exit = false;
 	while(exit == false)
@@ -50,7 +51,7 @@ int main(void)
 		#ifdef FRDM
 			readin(command, sizeof(command));
 		#else
-			scanf("% 25s", command);
+			scanf("%25s", command);
 		#endif
 
 		if(!strcmp(command, "help") | !strcmp(command, "Help"))
