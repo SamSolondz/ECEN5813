@@ -10,19 +10,20 @@ void invert(void * allocated)
 
   unsigned long *addr = 0;    // test data... switch back to 0
   unsigned long read = 0;
-  char read_char[20];
-
   // get address
   printf("\n\r(Invert)");
-  printf("\n\rEnter a hex address of memory to invert (ex 0xf4ac23df).");
+  printf("\n\rEnter a hex address of memory to invert (ex 0xf4ac23df).\n\r");
   if(allocated != 0)
-    printf("\n\rType '0' for the first allocated address.");
+    printf("Type '0' for the first allocated address.\n\r");
 
-  printf("\n\r");
-  readin(read_char, sizeof(read_char));
-  read = strtol(read_char, NULL, 16);
+	#ifdef FRDM
+	  char read_char[20];
+	  readin(read_char, sizeof(read_char));
+	  read = strtol(read_char, NULL, 16);
+	#else
+		scanf("%li", &read);
+	#endif
 
-  //scanf("%li", &read); //pointer to pointer
   if(read == 0)
     addr = (unsigned long *) allocated;
   else

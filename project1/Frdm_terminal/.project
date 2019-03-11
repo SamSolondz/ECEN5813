@@ -24,11 +24,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>doc/readme.txt</name>
-			<type>1</type>
-			<locationURI>SDK_2_x_FRDM_KL25Z/boards/frdmkl25z/demo_apps/hello_world/readme.txt</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

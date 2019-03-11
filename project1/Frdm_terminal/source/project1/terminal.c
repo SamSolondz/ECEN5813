@@ -11,14 +11,8 @@
 #include "invert.h"
 #include "pattern.h"
 #include "readin.h"
+#include "frdm.h"
 
-#ifndef LINUX
-#include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "board.h"
-#include "pin_mux.h"
-#define printf PRINTF
-#endif
 
 //The terminal function keeps track of what has been allocated using a pointer to the start of allocated memoru.
 //Memory edits are done in functions.
@@ -42,9 +36,13 @@ int main(void)
 		printf("\n\rEnter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n\r");
 
 		char command[12];
-		readin(command, sizeof(command));
 
-	    //scanf("% 25s", command); 	//TODO: protect against a user input that is too long.
+		#ifdef FRDM
+			readin(command, sizeof(command));
+		#else
+			scanf("% 25s", command);
+		#endif
+
 		if(!strcmp(command, "help") | !strcmp(command, "Help"))
 		{
 			help();

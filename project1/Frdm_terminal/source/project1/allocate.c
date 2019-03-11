@@ -5,7 +5,12 @@ void * allocate(void * allocated)
 	printf("\n\r(Allocate)");
 	printf("\n\rEnter the number of words you would like to allocate:\n\r");
 	char word_read[20];
-	readin(word_read, 20);
+
+	#ifdef FRDM
+		readin(word_read, sizeof(word_read));
+	#else
+		scanf("%s", word_read);
+	#endif
 
 	int word_count = atol(word_read);
 	void * new_allocated = 0;

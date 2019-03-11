@@ -6,7 +6,7 @@ source/project1/help.o source/project1/help.d: ../source/project1/help.c \
  ../CMSIS/MKL25Z4_features.h ../utilities/fsl_debug_console.h \
  ../drivers/fsl_common.h ../drivers/fsl_clock.h ../drivers/fsl_common.h \
  ../board/board.h ../board/clock_config.h ../drivers/fsl_gpio.h \
- ../board/pin_mux.h
+ ../board/pin_mux.h ../source/project1/readin.h
 
 ../source/project1/help.h:
 
@@ -43,3 +43,5 @@ source/project1/help.o source/project1/help.d: ../source/project1/help.c \
 ../drivers/fsl_gpio.h:
 
 ../board/pin_mux.h:
+
+../source/project1/readin.h:

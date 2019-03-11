@@ -4,7 +4,8 @@
  *  Created on: Mar 10, 2019
  *      Author: sam
  */
-#include "readin.h"
+#include "frdm.h"
+#ifdef FRDM
 void readin(char * command, int length)
 {
 	char temp[length];
@@ -36,3 +37,4 @@ void readin(char * command, int length)
 	temp[i] = 0;
 	strcpy(command, temp);
 }
+#endif

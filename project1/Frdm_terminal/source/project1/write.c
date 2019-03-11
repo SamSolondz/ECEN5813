@@ -7,18 +7,19 @@ void write(void * allocated, int words_allocated)
 	// get specified address from user
 	unsigned long * addr = 0;
 	unsigned long val = 0;
-	char read_char[20];
-
 	printf("\n\r(Write)");
 	printf("\n\rEnter a hex address where you want the data saved (ex 0xf4ac23df).\n\r");
 	if(allocated != 0)
 		printf("\n\rType '0' for the first allocated address.\n\r");
 
+	#ifdef FRDM
+	  char read_char[20];
+	  readin(read_char, sizeof(read_char));
+	  val = strtol(read_char, NULL, 16);
+	#else
+		scanf("%li", &val);
+	#endif
 
-	readin(read_char, sizeof(read_char));
-	val = strtol(read_char, NULL, 16);
-
-	//scanf("%li", &read); //pointer to pointer
 	if(val == 0)
 		addr = (unsigned long *) allocated;
 	else
@@ -31,9 +32,14 @@ void write(void * allocated, int words_allocated)
 
 	printf("\n\rMaximum size for input data is %li.\n\rIf input data exceeds maximum size, 0x7fffffffffffffff will be the input.", LONG_MAX);
 	printf("\n\rEnter hex data (ex 0x15)\n\r");
-	//scanf("%li", &val);
-	readin(read_char, sizeof(read_char));
-	val = strtol(read_char, NULL, 16);
+
+	#ifdef FRDM
+	  readin(read_char, sizeof(read_char));
+	  val = strtol(read_char, NULL, 16);
+	#else
+		scanf("%li", &val);
+	#endif
+
 
 //check for NULL pointer
 	if(addr == NULL)

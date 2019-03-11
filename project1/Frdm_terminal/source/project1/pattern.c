@@ -24,14 +24,18 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       return;
   }
 
-
-
   if(allocated != 0)
-    printf("\n\rType '0' for the first allocated address.");
-  //scanf("%li", &read); //pointer to pointer
-  char read_char[20];
-  readin(read_char, sizeof(read_char));
-  read = strtol(read_char, NULL, 16);
+    printf("\n\rType '0' for the first allocated address.\n\r");
+
+
+	#ifdef FRDM
+	  char read_char[20];
+	   readin(read_char, sizeof(read_char));
+	   read = strtol(read_char, NULL, 16);
+	#else
+		scanf("%li", &read); //pointer to pointer
+	#endif
+
 
   if(read == 0)
     addr = (unsigned long *) allocated;
@@ -45,17 +49,25 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
 
   printf("\n\rEnter a seed value to generate the pattern.\n\r");
 
-  readin(read_char, sizeof(read_char));
-  seed = atoi(read_char);
+	#ifdef FRDM
+	   readin(read_char, sizeof(read_char));
+	   seed = atoi(read_char);
+	#else
+		scanf("%lu", &seed); //pointer to pointer
+	#endif
+
 
   if(sel == 0)
     printf("\n\rHow many numbers would you like to generate and store?\n\r");
   else
     printf("\n\rHow many addresses would you like to check?\n\r");
 
-  readin(read_char, sizeof(read_char));
-  pattern_len = atoi(read_char);
-
+	#ifdef FRDM
+	   readin(read_char, sizeof(read_char));
+	   pattern_len = atoi(read_char);
+	#else
+		scanf("%d", &pattern); //pointer to pointer
+	#endif
   int pattern[pattern_len+1];
 
 
