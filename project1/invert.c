@@ -34,7 +34,7 @@ void invert(void * allocated)
   if(abort == true)
   	return;
 
-  //check for NULL pointer
+  //checki for NULL pointer
   if(addr == NULL)
   {
       printf("\n\rData could not be inverted at the specified address.");
@@ -49,7 +49,7 @@ void invert(void * allocated)
   #else
   printf("\n\rInverted Data: %#018lx", *addr);
   #endif
-  
+
   timer = clock() - timer;
   double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
 
