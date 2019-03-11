@@ -5,7 +5,6 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   unsigned long * addr = 0;
   unsigned long read = 0;
   int pattern_len = 0;
-  double functionTiming;
   clock_t timer;
 
   // get address, seed, and number in pattern
@@ -128,7 +127,14 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
     timer = clock() - timer;      //verify_pattern is done
   }
 
-  functionTiming = ((double)timer)/CLOCKS_PER_SEC;
-  printf("\n\rPattern write took %lf seconds to complete.\n", functionTiming);
+  #ifdef FRDM
+  double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
+  printf("\n\rProgram took %d seconds to execute", (int)time_taken);
+#else
+  double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
+
+  printf("\n\rPattern write took %lf seconds to complete.\n", time_taken);
+#endif
+
 
 }

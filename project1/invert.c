@@ -50,9 +50,16 @@ void invert(void * allocated)
   printf("\n\rInverted Data: %#018lx", *addr);
   #endif
 
-  timer = clock() - timer;
-  double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
+  #ifdef FRDM
+    timer = clock() - timer;
+    double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
 
-  printf("\n\rProgram took %f seconds to execute", time_taken);
+    printf("\n\rProgram took %d seconds to execute", (int)time_taken);
+  #else
+    timer = clock() - timer;
+    double time_taken = ((double)timer)/CLOCKS_PER_SEC; // in seconds
+
+    printf("\n\rProgram took %f seconds to execute", time_taken);
+  #endif
   return;
 }
