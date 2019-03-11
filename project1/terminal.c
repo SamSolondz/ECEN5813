@@ -39,9 +39,9 @@ int main(void)
   #endif
 
   void * allocated = 0;
-
 	bool exit = false;
 	while(exit == false)
+
 	{
 		printf("\n\r------------------------------------------------------------------");
 		printf("\n\rEnter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n\r");

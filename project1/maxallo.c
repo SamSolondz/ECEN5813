@@ -3,7 +3,7 @@
 
 // taken from deep c secrets to test maximum amount we can allocate
 
-main(){
+void max(){
 	int Mb = 0;
 	while (malloc(1<<20))
 	{
