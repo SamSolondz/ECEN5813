@@ -10,8 +10,11 @@
 #include "displaymem.h"
 #include "invert.h"
 #include "pattern.h"
+#include "readin.h"
+#include "frdm.h"
 
-//#define FRDM	1
+
+//#define FRDM	1 //uncommment this to run on the FRDM-KL25Z eval board
 
 #ifdef FRDM
 #include "fsl_device_registers.h"
@@ -28,20 +31,30 @@ int word_size = sizeof(unsigned long);
 
 int main(void)
 {
-	void * allocated = 0;
+  #ifdef FRDM
+  /* Init board hardware. */
+  BOARD_InitPins();
+  BOARD_BootClockRUN();
+  BOARD_InitDebugConsole();
+  #endif
+
+  void * allocated = 0;
 
 	bool exit = false;
 	while(exit == false)
 	{
-		printf("\n------------------------------------------------------------------\n");
-		printf("Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n");
-	  char command[16];
-	  scanf("%25s", command); 	//TODO: protect against a user input that is too long.
-		if(sizeof(command) > 20)
-		{
-			printf("\nCommand not recognized, try again\n");
-		}
-		else if(!strcmp(command, "help") | !strcmp(command, "Help"))
+		printf("\n\r------------------------------------------------------------------");
+		printf("\n\rEnter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.\n\r");
+
+		char command[12];
+
+		#ifdef FRDM
+			readin(command, sizeof(command));
+		#else
+			scanf("%25s", command);
+		#endif
+
+		if(!strcmp(command, "help") | !strcmp(command, "Help"))
 		{
 			help();
 		}
@@ -63,7 +76,7 @@ int main(void)
 		}
 		else if(!strcmp(command, "exit") | !strcmp(command, "Exit"))
 		{
-			printf("Bye!\n");
+			printf("\n\rBye!");
 			exit = true;
 			return 0;
 		}
@@ -82,7 +95,7 @@ int main(void)
 
 		else
 		{
-			printf("\nFunction not yet implemented, try again later.\n");
+			printf("\n\rFunction not yet implemented, try again later.\n");
 		}
 	}
 }

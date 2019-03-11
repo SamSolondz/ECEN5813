@@ -12,21 +12,31 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
 
   switch (sel) {
     case 0:         //write Pattern
-      printf("(Write Pattern)\n\n");
-      printf("Enter a starting address to store the pattern.\n");
+      printf("\n\r(Write Pattern)");
+      printf("\n\rEnter a starting address to store the pattern.\n\r");
       break;
     case 1:         //write Pattern
-      printf("(Verify Pattern)\n\n");
-      printf("Enter a starting address to verify the pattern.\n");
+      printf("\n\r(Verify Pattern)");
+      printf("\n\rEnter a starting address to verify the pattern.\n\r");
       break;
     default:
-      printf("Pattern error\n");
+      printf("\n\rPattern error.");
       return;
   }
 
   if(allocated != 0)
-    printf("Type '0' for the first allocated address.\n");
-  scanf("%li", &read); //pointer to pointer
+    printf("\n\rType '0' for the first allocated address.\n\r");
+
+
+	#ifdef FRDM
+	  char read_char[20];
+	   readin(read_char, sizeof(read_char));
+	   read = strtol(read_char, NULL, 16);
+	#else
+		scanf("%li", &read); //pointer to pointer
+	#endif
+
+
   if(read == 0)
     addr = (unsigned long *) allocated;
   else
@@ -37,19 +47,31 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
   if(abort == true)
   	return;
 
-  printf("Enter a seed value to generate the pattern.\n");
-  scanf("%lu", &seed);
+  printf("\n\rEnter a seed value to generate the pattern.\n\r");
+
+	#ifdef FRDM
+	   readin(read_char, sizeof(read_char));
+	   seed = atoi(read_char);
+	#else
+		scanf("%lu", &seed); //pointer to pointer
+	#endif
+
 
   if(sel == 0)
-    printf("How many numbers would you like to generate and store?\n");
+    printf("\n\rHow many numbers would you like to generate and store?\n\r");
   else
-    printf("How many addresses would you like to check?\n");
+    printf("\n\rHow many addresses would you like to check?\n\r");
 
-  scanf("%d", &pattern_len);
+	#ifdef FRDM
+	   readin(read_char, sizeof(read_char));
+	   pattern_len = atoi(read_char);
+	#else
+		scanf("%d", &pattern_len); //pointer to pointer
+	#endif
   int pattern[pattern_len+1];
 
 
-  printf("Generated pattern: ");
+  printf("\n\rGenerated pattern: ");
   // determine random numbers and print pattern numbers
   timer = clock();              //start counting here since we want to time the operation
   pattern[0] = (int) seed;      //store the seed value so we can work off that
@@ -89,20 +111,20 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
 
     if(valid_pattern == false)
     {
-      printf("\nPattern is not valid!\nValues found:\n");
+      printf("\n\rPattern is not valid!\n\rValues found:\n\r");
       for(int j = 0; j < pattern_len; j++)
       {
-        printf("Address: %p & Data: %d; Expected Value: %d\n", addr + j, actual[j], pattern[j+1]);
+        printf("\n\rAddress: 0x%p & Data: %d; Expected Value: %d\n\r", addr + j, actual[j], pattern[j+1]);
       }
 
     }
     else
-      printf("\nPattern is valid!\n");
+      printf("\n\rPattern is valid!");
 
     timer = clock() - timer;      //verify_pattern is done
   }
 
   functionTiming = ((double)timer)/CLOCKS_PER_SEC;
-  printf("write_pattern took %lf seconds to complete.\n", functionTiming);
+  printf("\n\rPattern write took %lf seconds to complete.\n", functionTiming);
 
 }

@@ -1,28 +1,31 @@
 #include "check_address.h"
 
-bool check_address(void * allocated, unsigned long * addr){
-//Check if address is within allocated memory
-  void * test;
+bool check_address(void * allocated, unsigned long * addr)
+{
+  void * test;          //create a pointer to test if the user-defined pointer is allocated
   int valid = false;
-  for(int i = 0; i < words_allocated; i++){
+  for(int i = 0; i < words_allocated; i++)
+  {
   	test = allocated + (i * word_size);
   	if(test == addr)
     	valid = true;
    }
-   if(valid == false){
-    	printf("Warning: Memory has not been allocated at that address.\nDo you wish to proceed? (y/n)\n");
-  	  char response;
-  		scanf(" %c", &response); //pointer to pointer
-      switch (response) {
-    	  case 'y':
-          return false;
-          break;
-  			case 'n':
-  			default:
-  			   printf("Operation aborted.\n");
-    			 return true;
-           break;
-  		}
-    }
-    return false;
+   if(valid == false)
+   {
+	   printf("\n\rWarning: Memory has not been allocated at that address!\n\rDo you wish to proceed? (y/n)\n\r");
+  	  char response[5];
+	  #ifdef FRDM
+  	  	  readin(response, sizeof(response));
+	  #else
+  	  	  scanf("%5s", response);
+	  #endif
+      if (!strcmp(response, "y") | !strcmp(response, "Y"))
+    	  return false;
+      else
+      {
+    	  printf("\n\rOperation aborted.\n\r");
+    	  return true;
+      }
+   }
+   return false;
 }
