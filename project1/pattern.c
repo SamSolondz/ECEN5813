@@ -114,7 +114,11 @@ void pattern(void * allocated, int sel) //write_pattern: sel = 0;
       printf("\n\rPattern is not valid!\n\rValues found:\n\r");
       for(int j = 0; j < pattern_len; j++)
       {
-        printf("\n\rAddress: 0x%p & Data: %d; Expected Value: %d\n\r", addr + j, actual[j], pattern[j+1]);
+		#ifdef FRDM
+          printf("\n\rAddress: 0x%p & Data: %d; Expected Value: %d\n\r", addr + j, actual[j], pattern[j+1]);
+		#else
+    	  printf("Address: %p & Data: %d; Expected Value: %d\n", addr + j, actual[j], pattern[j+1]);
+		#endif
       }
 
     }

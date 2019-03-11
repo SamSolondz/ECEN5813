@@ -27,7 +27,11 @@ void * allocate(void * allocated)
 		printf("\n\rMemory could not be allocated.\n");
 		return NULL;
 	}
-	printf("\n\rAddress of allocated memory: 0x%p\n", new_allocated);   //show user address of allocated memory
+	#ifdef FRDM
+		printf("\n\rAddress of allocated memory: 0x%p\n", new_allocated);   //show user address of allocated memory
+	#else
+		printf("\n\rAddress of allocated memory: %p\n", new_allocated);   //show user address of allocated memory
+	#endif
 	words_allocated += word_count;
 	return new_allocated;
 }

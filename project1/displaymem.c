@@ -47,7 +47,14 @@ void displaymem(void * allocated)
       if((addr + i) == NULL)
         printf("\n\rCannot display memory at 0x%p.", addr + i);
       else
-        printf("\n\rAddress: 0x%p & Data: %d\n", addr + i, (int)*(addr + i));
+      {
+        #ifdef FRDM
+          printf("\n\rAddress: 0x%p & Data: %d\n", addr + i, (int)*(addr + i));
+        #else
+          printf("\n\rAddress: %p & Data: %#018lx\n", addr + i, *(addr + i));
+        #endif
+      }
+
   }
   return;
 }

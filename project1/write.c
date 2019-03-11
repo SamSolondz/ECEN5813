@@ -48,7 +48,12 @@ void write(void * allocated, int words_allocated)
 		return;
 	}
 	*addr = val;
-	printf("\n\rData = %d written to address %p\n",(int)*addr, addr);
+	#ifdef FRDM
+		printf("\n\rData = %d written to address 0x%p\n",(int)*addr, addr);   //show user address of allocated memory
+	#else
+		printf("\n\rData = %#018lx written to address %p\n",*addr, addr);   //show user address of allocated memory
+	#endif
+
   return;
 
 }
