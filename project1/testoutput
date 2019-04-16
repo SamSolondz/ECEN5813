@@ -1,0 +1,233 @@
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Help)
+---Commands available---
+'Allocate'		 Allocate a block of memory. User specifies the number of words to be allocated.
+'Free'			 Release the previously allocated block of memory.
+'Display'		 Display a block of memory in hex format. User specifies an address and number of words to display.
+'Write'			 User specifies an address to modify and data to write to that address.
+'Invert'		 Invert all memory bits at a specified memory address.
+'Pattern'		 Write a pseudo-random pattern of a specified length at a specified memory address using a specified seed value.
+'Verify'		 Verify a pseudo-random pattern of a specified length at a specified memory address using a specified seed value.
+
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Allocate)
+Enter the number of words you would like to allocate:
+
+Address of allocated memory: 0x564d2e632280
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Display)
+Enter the starting address of the data to display in hex.
+Type '0' to start from the first user allocated memory address.
+
+
+You've allocated 3 words. Enter the number of words you wish to display:
+
+Address: 0x564d2e632280 & Data: 000000000000000000
+
+Address: 0x564d2e632288 & Data: 000000000000000000
+
+Address: 0x564d2e632290 & Data: 000000000000000000
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Write)
+Enter a hex address where you want the data saved (ex 0xf4ac23df).
+
+Type '0' for the first allocated address.
+
+Maximum size for input data is 9223372036854775807.
+If input data exceeds maximum size, 0x7fffffffffffffff will be the input.
+Enter hex data (ex 0x15)
+
+Data = 0x00000000deadbeef written to address 0x564d2e632280
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Display)
+Enter the starting address of the data to display in hex.
+Type '0' to start from the first user allocated memory address.
+
+
+You've allocated 3 words. Enter the number of words you wish to display:
+
+Address: 0x564d2e632280 & Data: 0x00000000deadbeef
+
+Address: 0x564d2e632288 & Data: 000000000000000000
+
+Address: 0x564d2e632290 & Data: 000000000000000000
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Invert)
+Enter a hex address of memory to invert (ex 0xf4ac23df).
+Type '0' for the first allocated address.
+
+Inverted Data: 0xffffffff21524110
+Program took 0.000002 seconds to execute
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Invert)
+Enter a hex address of memory to invert (ex 0xf4ac23df).
+Type '0' for the first allocated address.
+
+Inverted Data: 0x00000000deadbeef
+Program took 0.000002 seconds to execute
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Display)
+Enter the starting address of the data to display in hex.
+Type '0' to start from the first user allocated memory address.
+
+
+You've allocated 3 words. Enter the number of words you wish to display:
+
+Address: 0x564d2e632280 & Data: 0x00000000deadbeef
+
+Address: 0x564d2e632288 & Data: 000000000000000000
+
+Address: 0x564d2e632290 & Data: 000000000000000000
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Free)
+Freed memory at address 0x564d2e632290
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Free)
+Freed memory at address 0x564d2e632288
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Display)
+Enter the starting address of the data to display in hex.
+Type '0' to start from the first user allocated memory address.
+
+
+You've allocated 1 words. Enter the number of words you wish to display:
+
+Address: 0x564d2e632280 & Data: 0x00000000deadbeef
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Free)
+Freed memory at address 0x564d2e632280
+User allocated stack is empty.
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Allocate)
+Enter the number of words you would like to allocate:
+
+Address of allocated memory: 0x564d2e6322a0
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Write Pattern)
+Enter a starting address to store the pattern.
+
+Type '0' for the first allocated address.
+
+Enter a seed value to generate the pattern.
+
+How many numbers would you like to generate and store?
+
+Generated pattern: 2, 4, 8, 16, 5
+
+Pattern write took 0.000002 seconds to complete.
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Verify Pattern)
+Enter a starting address to verify the pattern.
+
+Type '0' for the first allocated address.
+
+Enter a seed value to generate the pattern.
+
+How many addresses would you like to check?
+
+Generated pattern: 2, 4, 8, 16, 5
+
+Pattern is valid!
+Pattern write took 0.000001 seconds to complete.
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Verify Pattern)
+Enter a starting address to verify the pattern.
+
+Type '0' for the first allocated address.
+
+Enter a seed value to generate the pattern.
+
+How many addresses would you like to check?
+
+Generated pattern: 6, 12, 24, 21, 15
+
+Pattern is not valid!
+Values found:
+Address: 0x564d2e6322a0 & Data: 2; Expected Value: 6
+Address: 0x564d2e6322a8 & Data: 4; Expected Value: 12
+Address: 0x564d2e6322b0 & Data: 8; Expected Value: 24
+Address: 0x564d2e6322b8 & Data: 16; Expected Value: 21
+Address: 0x564d2e6322c0 & Data: 5; Expected Value: 15
+
+Pattern write took 0.000003 seconds to complete.
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Display)
+Enter the starting address of the data to display in hex.
+Type '0' to start from the first user allocated memory address.
+
+
+You've allocated 5 words. Enter the number of words you wish to display:
+
+Address: 0x564d2e6322a0 & Data: 0x0000000000000002
+
+Address: 0x564d2e6322a8 & Data: 0x0000000000000004
+
+Address: 0x564d2e6322b0 & Data: 0x0000000000000008
+
+Address: 0x564d2e6322b8 & Data: 0x0000000000000010
+
+Address: 0x564d2e6322c0 & Data: 0x0000000000000005
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+(Write)
+Enter a hex address where you want the data saved (ex 0xf4ac23df).
+
+Type '0' for the first allocated address.
+
+Warning: Memory has not been allocated at that address!
+Do you wish to proceed? (y/n)
+
+Operation aborted.
+
+------------------------------------------------------------------
+Enter a command. Type 'Help' to get a list of commands. Type 'Exit' to quit.
+
+Bye!

@@ -343,7 +343,7 @@ void ADC16_SetChannelConfig(ADC_Type *base, uint32_t channelGroup, const adc16_c
 
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     /* Enable the differential conversion. */
-    if (config->enableDifferentialConversion)
+    if (config->enableDifferentialConversionf)
     {
         sc1 |= ADC_SC1_DIFF_MASK;
     }

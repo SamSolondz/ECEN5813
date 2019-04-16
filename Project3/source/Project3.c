@@ -40,6 +40,7 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 #include "fsl_adc16.h"
+
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -50,11 +51,7 @@
 
 void configure_adc()
 {
-	//Set single ended 16-bit conversion
-	ADC0->SC1[0] &= ~ADC_SC1_DIFF_MASK;
-	ADC0->CFG1  |= ADC_CFG1_MODE(3);
-	//Select DADP0 as input channel
-	ADC0->SC1[0] &= ~ADC_SC1_ADCH_MASK;
+
 
 	adc16_config_t ADCconfig;
 	//16 bit single ended conversion
@@ -66,15 +63,27 @@ void configure_adc()
 	//Enable continuous conversion
 	ADCconfig.enableContinuousConversion = true;
 
+	ADC16_Init(ADC0, &ADCconfig);
+
+
+	//Set single ended 16-bit conversion
+	ADC0->SC1[0] &= ~ADC_SC1_DIFF_MASK;
+	ADC0->CFG1  |= ADC_CFG1_MODE(3);
+	//Select DADP0 as input channel
+	ADC0->SC1[0] &= ~ADC_SC1_ADCH_MASK;
+
 	adc16_channel_config_t ADCchannelconfig;
 	ADCchannelconfig.channelNumber = 0;
 	ADCchannelconfig.enableDifferentialConversion = false;
 	ADCchannelconfig.enableInterruptOnConversionCompleted = false;
 
-
-
-	ADC16_Init(ADC0, &ADCconfig);
 	ADC16_SetChannelConfig(ADC0, 0, &ADCchannelconfig);
+
+	 //Enable Port E Clock Gate control - SCGC5
+	 SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
+	 SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
+	 //PORTE->PCR[1] |= PORT_PCR_MUX(1);
+
 }
 
 int main(void) {
@@ -86,13 +95,14 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    PRINTF("Hello World\n");
+    PRINTF("\n\rHello World\n");
 
+    configure_adc();
    while(1) {
        if(ADC0->SC1[0] & ADC_SC1_COCO_MASK)
        {
     	   uint16_t data = ADC0->R[0] & ADC_R_D_MASK;
-    	   PRINTF("\n\rData: %lu", data);
+    	   PRINTF("\n\rADC channel 0: %u", data);
        }
 
     }
