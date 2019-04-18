@@ -6,7 +6,8 @@ source/Project3.o source/Project3.d: ../source/Project3.c \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
- ../utilities/fsl_debug_console.h ../drivers/fsl_adc16.h
+ ../utilities/fsl_debug_console.h ../drivers/fsl_adc16.h \
+ ../drivers/fsl_dma.h
 
 ../board/board.h:
 
@@ -47,3 +48,5 @@ source/Project3.o source/Project3.d: ../source/Project3.c \
 ../utilities/fsl_debug_console.h:
 
 ../drivers/fsl_adc16.h:
+
+../drivers/fsl_dma.h:

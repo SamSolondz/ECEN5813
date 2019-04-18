@@ -40,14 +40,18 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 #include "fsl_adc16.h"
+#include "fsl_dma.h"
 
-/* TODO: insert other include files here. */
+//#define RAWADC 1
+#define DMATEST 1
+uint32_t buffer[128];
+uint32_t *buffer_ptr = buffer;
 
-/* TODO: insert other definitions and declarations here. */
+uint32_t buffer0[128];
+uint32_t buffer1[128];
 
-/*
- * @brief   Application entry point.
- */
+int buffer_select = 0;
+int half_full = 0;
 
 void configure_adc()
 {
@@ -82,8 +86,72 @@ void configure_adc()
 	 //Enable Port E Clock Gate control - SCGC5
 	 SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
 	 SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
-	 //PORTE->PCR[1] |= PORT_PCR_MUX(1);
 
+}
+
+void configure_dma()
+{
+	//Enable clock to DMA
+	SIM->SCGC7 |= SIM_SCGC7_DMA_MASK;
+
+	uint8_t DMAchannel = 0;
+	dma_transfer_config_t config;
+	config.srcAddr = (uint32_t)(&(ADC0->R[0]));
+	config.destAddr = (uint32_t)(buffer_ptr);
+	config.enableSrcIncrement = false;
+	config.enableDestIncrement = true;
+	config.srcSize = kDMA_Transfersize32bits;
+	config.destSize = kDMA_Transfersize32bits;
+	config.transferSize = sizeof(buffer)/2;	//Buffer size of 128
+
+
+	DMA_Init(DMA0);
+	DMA_SetTransferConfig(DMA0, DMAchannel, &config);
+
+	//Enable DMA interrupt on transfer complete
+	DMA0->DMA[0].DCR |= DMA_DCR_EINT_MASK;
+
+	//Enable DMA
+	DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+
+
+
+/*DMA Multiplexor setup*/
+//	//Disable DMA
+//	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_ENBL_MASK;
+//	//Disable DMA trigger
+//	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_TRIG_MASK;
+
+//	//Set ADC as DMAMUX input channel source
+//	DMAMUX0->CHCFG[0] |= 0x3B; //ADC slot number
+//	//Enable DMA
+//	DMAMUX0->CHCFG[0] |= DMAMUX_CHCFG_ENBL_MASK;
+
+}
+
+
+void DMA0_IRQHandler()
+{
+	NVIC_DisableIRQ(DMA0_IRQn);
+
+	//Toggle GPIO PTE30 = J11
+	GPIOE->PTOR = (1<<30);
+
+	if(half_full == 0)
+	{
+		DMA0->DMA[0].SAR |= (uint32_t)(buffer_ptr + 64 * sizeof(uint32_t));
+		half_full = 1;
+		DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+	}
+
+	else
+	{
+		half_full = 0;
+		DMA0->DMA[0].SAR |= (uint32_t)(buffer_ptr);
+		DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+	}
+
+	NVIC_EnableIRQ(DMA0_IRQn);
 }
 
 int main(void) {
@@ -97,14 +165,41 @@ int main(void) {
 
     PRINTF("\n\rHello World\n");
 
+    //Initialize buffer
+    for(int k = 0; k < (sizeof(buffer)/sizeof(uint32_t)); k++)
+    	buffer[k] = 0;
+
+    NVIC_EnableIRQ(DMA0_IRQn);
     configure_adc();
-   while(1) {
+    configure_dma();
+
+    while(1)
+    {
+
+#ifdef RAWADC
        if(ADC0->SC1[0] & ADC_SC1_COCO_MASK)
        {
-    	   uint16_t data = ADC0->R[0] & ADC_R_D_MASK;
-    	   PRINTF("\n\rADC channel 0: %u", data);
-       }
+    	   uint32_t data = ADC0->R[0] & ADC_R_D_MASK;
+           double pre = ((double)3.3)/((double)0xffff);
+    	   double adc_read = ((double)data) * pre;
 
-    }
-    return 0 ;
+    	   PRINTF("\n\rADC channel 0: %u, %d", data, (int)adc_read);
+       }
+#endif
+
+#ifdef DMATEST
+
+		for(int i = 0; i < 128; i++)
+		{
+		   uint32_t val = buffer[i];
+		   PRINTF("\n\r i = %d, %u", i, val);
+
+		}
+
+		if(!(DMA0->DMA[0].DSR_BCR & DMA_DSR_BCR_BSY_MASK));
+			DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+
+#endif
+   }
+    return 0;
 }
