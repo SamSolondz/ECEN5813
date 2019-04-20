@@ -45,14 +45,18 @@
 //#define RAWADC 1
 #define DMATEST 1
 #define DMACHANNEL0 0
+
 uint32_t buffer[128];
 uint32_t *buffer_ptr = buffer;
 
 uint32_t buffer0[128];
 uint32_t buffer1[128];
 
+uint32_t reading[128];
+
 int buffer_select = 0;
 int half_full = 0;
+int j = 0;
 
 void configure_gpio()
 {
@@ -218,13 +222,22 @@ int main(void) {
 		{
 		   uint32_t val = buffer[i];
 		   PRINTF("\n\r i = %d, %u", i, val);
+
+		   if(val >= buffer[i-1])									//////////// Inserted PeakMeter /////////////////
+		   {
+		       reading[j] = val;
+		   }
+		   else
+		   {
+		       reading[j] = 0.5 * reading[j-1];
+		   }
+
+		   PRINTF("\n\rPeakMeter = %d", reading[j]);
+
+		   j++;
 		}
 		PRINTF("\nDONE");
 	    NVIC_EnableIRQ(DMA0_IRQn);
-
-
-
-
 #endif
    }
     return 0;
