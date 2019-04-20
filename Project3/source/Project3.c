@@ -78,12 +78,10 @@ void configure_gpio()
 
 void configure_adc()
 {
-
-
 	adc16_config_t ADCconfig;
 	//16 bit single ended conversion
 	ADCconfig.resolution = kADC16_ResolutionSE16Bit;
-	//Select bus clock for clock sourc
+	//Select bus clock for clock source
 	ADCconfig.clockSource = kADC16_ClockSourceAlt0;
 	//Set clock divider to 1
 	ADCconfig.clockDivider = kADC16_ClockDivider1;
@@ -91,7 +89,6 @@ void configure_adc()
 	ADCconfig.enableContinuousConversion = true;
 
 	ADC16_Init(ADC0, &ADCconfig);
-
 
 	//Set single ended 16-bit conversion
 	ADC0->SC1[0] &= ~ADC_SC1_DIFF_MASK;
@@ -109,12 +106,10 @@ void configure_adc()
 	ADCchannelconfig.enableInterruptOnConversionCompleted = false;
 
 	ADC16_SetChannelConfig(ADC0, 0, &ADCchannelconfig);
-
 }
 
 void configure_dma()
 {
-
 	//Enable clock to DMA Mux;
 	SIM->SCGC6 |= SIM_SCGC6_DMAMUX_MASK;
 
@@ -133,10 +128,12 @@ void configure_dma()
 
 	dma_transfer_config_t config;
 	config.srcAddr = (uint32_t)(&(ADC0->R[0]));
+
 	if(half_full)
 		config.destAddr = (uint32_t)(buffer_ptr);
 	else
 		config.destAddr =(uint32_t)(&(buffer[64]));
+
 	config.enableSrcIncrement = false;
 	config.enableDestIncrement = true;
 	config.srcSize = kDMA_Transfersize32bits;
@@ -156,7 +153,6 @@ void configure_dma()
 	DMAMUX0->CHCFG[0] |= DMAMUX_CHCFG_ENBL_MASK;
 }
 
-
 void DMA0_IRQHandler()
 {
 	NVIC_DisableIRQ(DMA0_IRQn);
@@ -168,6 +164,7 @@ void DMA0_IRQHandler()
 
 	if(half_full == 0)
 		half_full = 1;
+
 	else
 		half_full = 0;
 
@@ -194,13 +191,11 @@ int main(void) {
     for(int k = 0; k < (sizeof(buffer)/sizeof(uint32_t)); k++)
     	buffer[k] = 0;
 
-
     NVIC_EnableIRQ(DMA0_IRQn);
     configure_gpio();
     configure_adc();
     //TODO:  add ADC calibration function
     configure_dma();
-
 
     while(1)
     {
@@ -217,28 +212,34 @@ int main(void) {
 #endif
 
 #ifdef DMATEST
-       NVIC_DisableIRQ(DMA0_IRQn);
+        NVIC_DisableIRQ(DMA0_IRQn);
+
 		for(int i = 0; i < 128; i++)
 		{
 		   uint32_t val = buffer[i];
-		   PRINTF("\n\r i = %d, %u", i, val);
+		   PRINTF("\n\ri = %d, buffer = %u", i, val);
 
+		   // add to readout if larger
 		   if(val >= buffer[i-1])									//////////// Inserted PeakMeter /////////////////
 		   {
 		       reading[j] = val;
 		   }
+
+		   // reduce readout if not larger
 		   else
 		   {
 		       reading[j] = 0.5 * reading[j-1];
 		   }
 
-		   PRINTF("\n\rPeakMeter = %d", reading[j]);
+		   PRINTF("\n\rPeakMeter = %d\n", reading[j]);
 
 		   j++;
 		}
-		PRINTF("\nDONE");
+
+		PRINTF("\n\n\rDONE");
 	    NVIC_EnableIRQ(DMA0_IRQn);
 #endif
+
    }
     return 0;
 }
