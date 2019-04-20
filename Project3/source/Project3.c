@@ -44,6 +44,7 @@
 
 //#define RAWADC 1
 #define DMATEST 1
+#define DMACHANNEL0 0
 uint32_t buffer[128];
 uint32_t *buffer_ptr = buffer;
 
@@ -52,6 +53,24 @@ uint32_t buffer1[128];
 
 int buffer_select = 0;
 int half_full = 0;
+
+void configure_gpio()
+{
+		/*GPIO shit*/
+		 //Enable Port E Clock Gate control - SCGC5
+		 SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
+		 SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
+
+		 SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
+
+		 GPIOD->PDDR |= (1<<1);
+		 GPIOD->PSOR |= (1<<1);
+		 PORTD->PCR[1] |= PORT_PCR_MUX(1);
+
+		 GPIOE->PDDR |= (30<<1);
+		 GPIOE->PSOR |= (30<<1);
+		 PORTE->PCR[30] |= PORT_PCR_MUX(1);
+}
 
 void configure_adc()
 {
@@ -75,6 +94,10 @@ void configure_adc()
 	ADC0->CFG1  |= ADC_CFG1_MODE(3);
 	//Select DADP0 as input channel
 	ADC0->SC1[0] &= ~ADC_SC1_ADCH_MASK;
+	//DMA request ADC enable
+	ADC0->SC2 |= ADC_SC2_DMAEN_MASK;
+	//Enable interrupt
+	ADC0->SC1[0] |= ADC_SC1_AIEN_MASK;
 
 	adc16_channel_config_t ADCchannelconfig;
 	ADCchannelconfig.channelNumber = 0;
@@ -83,50 +106,50 @@ void configure_adc()
 
 	ADC16_SetChannelConfig(ADC0, 0, &ADCchannelconfig);
 
-	 //Enable Port E Clock Gate control - SCGC5
-	 SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
-	 SIM->SCGC6 |= SIM_SCGC6_ADC0_MASK;
-
 }
 
 void configure_dma()
 {
+
+	//Enable clock to DMA Mux;
+	SIM->SCGC6 |= SIM_SCGC6_DMAMUX_MASK;
+
+	//Disable DMAMUX
+	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_ENBL_MASK;
+	//Disable DMAMUX trigger
+	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_TRIG_MASK;
+
+	//Set ADC as DMAMUX input channel source
+	DMAMUX0->CHCFG[0] |= DMAMUX_CHCFG_SOURCE(40); //ADC souce module
+
 	//Enable clock to DMA
 	SIM->SCGC7 |= SIM_SCGC7_DMA_MASK;
 
-	uint8_t DMAchannel = 0;
+	DMA_ResetChannel(DMA0, DMACHANNEL0);
+
 	dma_transfer_config_t config;
 	config.srcAddr = (uint32_t)(&(ADC0->R[0]));
-	config.destAddr = (uint32_t)(buffer_ptr);
+	if(half_full)
+		config.destAddr = (uint32_t)(buffer_ptr);
+	else
+		config.destAddr =(uint32_t)(&(buffer[64]));
 	config.enableSrcIncrement = false;
 	config.enableDestIncrement = true;
 	config.srcSize = kDMA_Transfersize32bits;
 	config.destSize = kDMA_Transfersize32bits;
 	config.transferSize = sizeof(buffer)/2;	//Buffer size of 128
 
-
-	DMA_Init(DMA0);
-	DMA_SetTransferConfig(DMA0, DMAchannel, &config);
-
 	//Enable DMA interrupt on transfer complete
 	DMA0->DMA[0].DCR |= DMA_DCR_EINT_MASK;
+	//Enable peripheral request
+	DMA0->DMA[0].DCR |= DMA_DCR_ERQ_MASK;
 
-	//Enable DMA
-	DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+	DMA_Init(DMA0);
 
+	DMA_SetTransferConfig(DMA0, DMACHANNEL0, &config);
 
-
-/*DMA Multiplexor setup*/
-//	//Disable DMA
-//	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_ENBL_MASK;
-//	//Disable DMA trigger
-//	DMAMUX0->CHCFG[0] &= ~DMAMUX_CHCFG_TRIG_MASK;
-
-//	//Set ADC as DMAMUX input channel source
-//	DMAMUX0->CHCFG[0] |= 0x3B; //ADC slot number
-//	//Enable DMA
-//	DMAMUX0->CHCFG[0] |= DMAMUX_CHCFG_ENBL_MASK;
-
+	//Enable DMAMUX
+	DMAMUX0->CHCFG[0] |= DMAMUX_CHCFG_ENBL_MASK;
 }
 
 
@@ -135,21 +158,19 @@ void DMA0_IRQHandler()
 	NVIC_DisableIRQ(DMA0_IRQn);
 
 	//Toggle GPIO PTE30 = J11
-	GPIOE->PTOR = (1<<30);
+	GPIOE->PTOR |= (1<<30);
+	//Toggle LED
+	GPIOD->PTOR |= (1<<1);
 
 	if(half_full == 0)
-	{
-		DMA0->DMA[0].SAR |= (uint32_t)(buffer_ptr + 64 * sizeof(uint32_t));
 		half_full = 1;
-		DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
-	}
-
 	else
-	{
 		half_full = 0;
-		DMA0->DMA[0].SAR |= (uint32_t)(buffer_ptr);
-		DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
-	}
+
+	//Acknowledge Interupt
+	DMA0->DMA[0].DSR_BCR |= DMA_DSR_BCR_DONE_MASK;
+	//Reconfigure DMA channel
+	configure_dma();
 
 	NVIC_EnableIRQ(DMA0_IRQn);
 }
@@ -163,15 +184,19 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    PRINTF("\n\rHello World\n");
+    PRINTF("\n\rHello World");
 
     //Initialize buffer
     for(int k = 0; k < (sizeof(buffer)/sizeof(uint32_t)); k++)
     	buffer[k] = 0;
 
+
     NVIC_EnableIRQ(DMA0_IRQn);
+    configure_gpio();
     configure_adc();
+    //TODO:  add ADC calibration function
     configure_dma();
+
 
     while(1)
     {
@@ -188,16 +213,17 @@ int main(void) {
 #endif
 
 #ifdef DMATEST
-
+       NVIC_DisableIRQ(DMA0_IRQn);
 		for(int i = 0; i < 128; i++)
 		{
 		   uint32_t val = buffer[i];
 		   PRINTF("\n\r i = %d, %u", i, val);
-
 		}
+		PRINTF("\nDONE");
+	    NVIC_EnableIRQ(DMA0_IRQn);
 
-		if(!(DMA0->DMA[0].DSR_BCR & DMA_DSR_BCR_BSY_MASK));
-			DMA0->DMA[0].DCR |= DMA_DCR_START_MASK;
+
+
 
 #endif
    }
