@@ -44,7 +44,10 @@
 
 //#define RAWADC 1
 #define DMATEST 1
+
 uint32_t buffer[128];
+float reading[128];
+
 uint32_t *buffer_ptr = buffer;
 
 uint32_t buffer0[128];
@@ -194,6 +197,19 @@ int main(void) {
 		   uint32_t val = buffer[i];
 		   PRINTF("\n\r i = %d, %u", i, val);
 
+		   if((abs(buffer[l])) > buffer[l-1])									//////////// Inserted PeakMeter /////////////////
+		   {																	// the project said to take the absolute value //
+		       reading[j] = buffer[l];											// in that case buffer will need signed values //
+		   }
+		   else
+		   {
+		       reading[j] = 0.5 * reading[j-1];
+		   }
+
+		   PRINTF("\n\rPeakMeter = %0.2f", reading[j]);
+
+		   i++;
+		   j++;
 		}
 
 		if(!(DMA0->DMA[0].DSR_BCR & DMA_DSR_BCR_BSY_MASK));
