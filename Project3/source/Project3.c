@@ -237,6 +237,7 @@ int main(void) {
 		}
 
 		PRINTF("\n\n\rDONE");
+		j = 0;
 	    NVIC_EnableIRQ(DMA0_IRQn);
 #endif
 
