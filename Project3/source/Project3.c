@@ -50,9 +50,6 @@
 uint32_t buffer[128];
 uint32_t *buffer_ptr = buffer;
 
-uint32_t buffer0[128];
-uint32_t buffer1[128];
-
 uint32_t reading[128];
 static uint32_t lookupTable[128];
 
