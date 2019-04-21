@@ -44,6 +44,7 @@
 
 //#define RAWADC 1
 #define DMATEST 1
+#define DBFSTABLE 1
 #define DMACHANNEL0 0
 
 uint32_t buffer[128];
@@ -53,10 +54,12 @@ uint32_t buffer0[128];
 uint32_t buffer1[128];
 
 uint32_t reading[128];
+static uint32_t lookupTable[128];
 
 int buffer_select = 0;
 int half_full = 0;
 int j = 0;
+int k, l;
 
 void configure_gpio()
 {
@@ -217,6 +220,8 @@ int main(void) {
 		for(int i = 0; i < 128; i++)
 		{
 		   uint32_t val = buffer[i];
+		   lookupTable[i] = buffer[i];
+
 		   PRINTF("\n\ri = %d, buffer = %u", i, val);
 
 		   // add to readout if larger
@@ -236,8 +241,44 @@ int main(void) {
 		   j++;
 		}
 
-		PRINTF("\n\n\rDONE");
+		// dBFS
+		for(k = 0; k < 128; k++)
+		{
+			for(l = k+1; l < 128; l++)
+			{
+				if(lookupTable[k] < lookupTable[l])
+				{
+					int temp = lookupTable[k];
+					lookupTable[k] = lookupTable[l];
+					lookupTable[l] = temp;
+				}
+			}
+		}
+
+		PRINTF("\n\n\rDONE\n");
 		j = 0;
+		k = 0;
+		l = 0;
+	    NVIC_EnableIRQ(DMA0_IRQn);
+#endif
+
+#ifdef DBFSTABLE
+        NVIC_DisableIRQ(DMA0_IRQn);
+        int n = 0;
+
+	    for(int m = 0; m < 128; m++)
+	    {
+	    	if(buffer[m] != lookupTable[n])
+	    	{
+	    		n++;
+	    	}
+	    	else
+	    	{
+	    		PRINTF("\n\n\rRaw Signal = %d, Signal level = -%d dBFS\n", buffer[m], n);
+	    		n = 0;
+	    	}
+	    }
+
 	    NVIC_EnableIRQ(DMA0_IRQn);
 #endif
 
