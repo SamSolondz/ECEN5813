@@ -51,7 +51,8 @@ uint32_t buffer[128];
 uint32_t *buffer_ptr = buffer;
 
 uint32_t reading[128];
-static uint32_t lookupTable[128];
+uint32_t rawTable[128];
+uint32_t lookupTable[128];
 
 int buffer_select = 0;
 int half_full = 0;
@@ -218,6 +219,7 @@ int main(void) {
 		{
 		   uint32_t val = buffer[i];
 		   lookupTable[i] = buffer[i];
+		   rawTable[i] = buffer[i];
 
 		   PRINTF("\n\ri = %d, buffer = %u", i, val);
 
@@ -250,6 +252,7 @@ int main(void) {
 					lookupTable[l] = temp;
 				}
 			}
+//			PRINTF("\n\rlookup table: %d", lookupTable[k]);
 		}
 
 		PRINTF("\n\n\rDONE\n");
@@ -265,15 +268,15 @@ int main(void) {
 
 	    for(int m = 0; m < 128; m++)
 	    {
-	    	if(buffer[m] != lookupTable[n])
+	    	PRINTF("\n\n\rbuffer = %d", rawTable[m]);
+	    	PRINTF("\n\n\rlookup = %d", lookupTable[n]);
+	    	while(rawTable[m] != lookupTable[n])
 	    	{
 	    		n++;
 	    	}
-	    	else
-	    	{
+
 	    		PRINTF("\n\n\rRaw Signal = %d, Signal level = -%d dBFS\n", buffer[m], n);
 	    		n = 0;
-	    	}
 	    }
 
 	    NVIC_EnableIRQ(DMA0_IRQn);
