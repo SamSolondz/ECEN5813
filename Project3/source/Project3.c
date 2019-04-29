@@ -33,6 +33,7 @@
  * @brief   Application entry point.
  */
 #include <stdio.h>
+#include <math.h>
 #include "board.h"
 #include "peripherals.h"
 #include "pin_mux.h"
@@ -42,17 +43,17 @@
 #include "fsl_adc16.h"
 #include "fsl_dma.h"
 
-//#define RAWADC 1
-#define DMATEST 1
-#define DBFSTABLE 1
+#define RAWADC 1
+//#define DMATEST 1
 #define DMACHANNEL0 0
 
-uint32_t buffer[128];
+#define max16	65536
+
+uint32_t buffer[256];
 uint32_t *buffer_ptr = buffer;
 
-uint32_t reading[128];
-uint32_t rawTable[128];
-uint32_t lookupTable[128];
+uint32_t reading[256];
+int32_t dbfs;
 
 int buffer_select = 0;
 int half_full = 0;
@@ -133,13 +134,13 @@ void configure_dma()
 	if(half_full)
 		config.destAddr = (uint32_t)(buffer_ptr);
 	else
-		config.destAddr =(uint32_t)(&(buffer[64]));
+		config.destAddr =(uint32_t)(&(buffer[128]));
 
 	config.enableSrcIncrement = false;
 	config.enableDestIncrement = true;
 	config.srcSize = kDMA_Transfersize32bits;
 	config.destSize = kDMA_Transfersize32bits;
-	config.transferSize = sizeof(buffer)/2;	//Buffer size of 128
+	config.transferSize = sizeof(buffer)/2;	//Buffer size of 256
 
 	//Enable DMA interrupt on transfer complete
 	DMA0->DMA[0].DCR |= DMA_DCR_EINT_MASK;
@@ -208,6 +209,12 @@ int main(void) {
            double pre = ((double)3.3)/((double)0xffff);
     	   double adc_read = ((double)data) * pre;
 
+    	   // dbfs calculations
+    	   float test = (((float)data)/((float)max16));
+    	   float result = log(test);
+           dbfs = (20)*result;
+           PRINTF("\n\n\rdbfs: -%d", dbfs);
+
     	   PRINTF("\n\rADC channel 0: %u, %d", data, (int)adc_read);
        }
 #endif
@@ -215,13 +222,11 @@ int main(void) {
 #ifdef DMATEST
         NVIC_DisableIRQ(DMA0_IRQn);
 
-		for(int i = 0; i < 128; i++)
+		for(int i = 0; i < 256; i++)
 		{
 		   uint32_t val = buffer[i];
-		   lookupTable[i] = buffer[i];
-		   rawTable[i] = buffer[i];
 
-		   PRINTF("\n\ri = %d, buffer = %u", i, val);
+//		   PRINTF("\n\ri = %d, buffer = %u", i, val);
 
 		   // add to readout if larger
 		   if(val >= buffer[i-1])									//////////// Inserted PeakMeter /////////////////
@@ -235,49 +240,13 @@ int main(void) {
 		       reading[j] = 0.5 * reading[j-1];
 		   }
 
-		   PRINTF("\n\rPeakMeter = %d\n", reading[j]);
+//		   PRINTF("\n\rPeakMeter = %d\n", reading[j]);
 
 		   j++;
 		}
 
-		// dBFS
-		for(k = 0; k < 128; k++)
-		{
-			for(l = k+1; l < 128; l++)
-			{
-				if(lookupTable[k] < lookupTable[l])
-				{
-					int temp = lookupTable[k];
-					lookupTable[k] = lookupTable[l];
-					lookupTable[l] = temp;
-				}
-			}
-//			PRINTF("\n\rlookup table: %d", lookupTable[k]);
-		}
-
 		PRINTF("\n\n\rDONE\n");
 		j = 0;
-		k = 0;
-		l = 0;
-	    NVIC_EnableIRQ(DMA0_IRQn);
-#endif
-
-#ifdef DBFSTABLE
-        NVIC_DisableIRQ(DMA0_IRQn);
-        int n = 0;
-
-	    for(int m = 0; m < 128; m++)
-	    {
-	    	PRINTF("\n\n\rbuffer = %d", rawTable[m]);
-	    	PRINTF("\n\n\rlookup = %d", lookupTable[n]);
-	    	while(rawTable[m] != lookupTable[n])
-	    	{
-	    		n++;
-	    	}
-
-	    		PRINTF("\n\n\rRaw Signal = %d, Signal level = -%d dBFS\n", buffer[m], n);
-	    		n = 0;
-	    }
 
 	    NVIC_EnableIRQ(DMA0_IRQn);
 #endif
